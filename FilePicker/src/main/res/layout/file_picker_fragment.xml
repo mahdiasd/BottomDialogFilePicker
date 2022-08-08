@@ -112,6 +112,7 @@
                 android:layout_marginRight="-15dp"
                 android:layout_marginBottom="-15dp"
                 android:background="@drawable/shape_circle"
+                android:backgroundTint="@color/white"
                 android:elevation="2dp"
                 android:padding="3dp"
                 android:visibility="visible">

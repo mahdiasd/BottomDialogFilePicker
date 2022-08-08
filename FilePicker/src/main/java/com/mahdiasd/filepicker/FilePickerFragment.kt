@@ -1,7 +1,6 @@
 package com.mahdiasd.filepicker
 
 import android.Manifest
-import android.content.ContentResolver
 import android.content.res.Configuration
 import android.database.Cursor
 import android.os.Bundle
@@ -10,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -22,7 +20,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mahdiasd.filepicker.databinding.FilePickerFragmentBinding
-import java.io.File
 
 
 class FilePickerFragment : BottomSheetDialogFragment() {
@@ -78,16 +75,24 @@ class FilePickerFragment : BottomSheetDialogFragment() {
             config.activeColor,
             config.deActiveColor
         )
+
         binding.sectionList.let {
             it.layoutManager =
                 (LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false))
             it.adapter = sectionAdapter
         }
         sectionAdapter.changeMode.observe(this) {
-            Log.e("+++++++++++", "observe")
-            config.selectedMode = it
-            initRecyclerView()
+            if (it == PickerMode.FILE) {
+                openFileManager()
+            } else {
+                config.selectedMode = it
+                initRecyclerView()
+            }
         }
+
+    }
+
+    private fun openFileManager() {
 
     }
 
@@ -131,17 +136,9 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                         )
                     )
                 }
-                PickerMode.Document -> {
-                    temp.add(
-                        SectionModel(
-                            config.documentText,
-                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_document),
-                            PickerMode.Document
-                        )
-                    )
-                }
             }
         }
+        temp.find { it.mode == config.selectedMode }?.selected = true
         return temp
 
     }
@@ -179,18 +176,8 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         if (temp.contains(PickerMode.Image))
             getImage()
 
-        if (temp.contains(PickerMode.Document))
-            getDoc()
-
         if (temp.contains(PickerMode.Audio))
             getAudio()
-
-//        val path = Environment.getExternalStorageDirectory().absolutePath
-//        val f = File(path)
-//        val files: Array<File> = f.listFiles() as Array<File>
-//        files.forEach {
-//            fileManagerList.add(FileModel(it.path))
-//        }
 
         initRecyclerView()
     }
@@ -260,46 +247,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         cursor.close()
     }
 
-    private fun getDoc() {
-        val cr: ContentResolver = requireContext().contentResolver
-        val uri = MediaStore.Files.getContentUri("external")
-
-        val projection =
-            arrayOf(MediaStore.Files.FileColumns._ID, MediaStore.Files.FileColumns.DISPLAY_NAME)
-        val selection = (MediaStore.Files.FileColumns.MEDIA_TYPE + "="
-                + MediaStore.Files.FileColumns.MEDIA_TYPE)
-        val selectionArgs: Array<String>? = null
-        val selectionMimeType = MediaStore.Files.FileColumns.MIME_TYPE + "=?"
-        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension("pdf")
-        val selectionArgsPdf = arrayOf(mimeType)
-
-        val cursor = cr.query(uri, projection, selectionMimeType, selectionArgsPdf, null)?: return
-
-        while (cursor.moveToNext()) {
-            val dataColumnIndex: Int = cursor.getColumnIndex(MediaStore.Files.FileColumns.DATA)
-            docList.add(FileModel(cursor.getString(dataColumnIndex)))
-        }
-//        docList = docList.filter { it.path.endsWith(".pdf") } as MutableList<FileModel>
-        cursor.close()
-    }
-
-    private fun getFileFromDirectory(file: File) {
-        if (file.isDirectory) {
-            file.listFiles()?.forEach {
-                if (it.isDirectory) getFileFromDirectory(it)
-                else {
-                    totalFiles.add(it.path)
-                }
-            }
-        } else {
-            file.listFiles()?.forEach {
-                totalFiles.add(it.path)
-            }
-        }
-    }
-
     private fun initRecyclerView() {
-        Log.e("+++++++++++", "initRecyclerView")
         binding.loading = false
 
         val temp = getSelectedList()
@@ -324,7 +272,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
 
     private fun handleLayoutManager(): RecyclerView.LayoutManager {
         return when (config.selectedMode) {
-            PickerMode.Document, PickerMode.Audio ->
+            PickerMode.Audio ->
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
             else -> {
@@ -352,10 +300,6 @@ class FilePickerFragment : BottomSheetDialogFragment() {
             PickerMode.Image -> {
                 Log.e("+++++++++++", "getSelectedList: ${imageList.size}")
                 imageList
-            }
-            PickerMode.Document -> {
-                Log.e("+++++++++++", "getSelectedList: ${docList.size}")
-                docList
             }
             else -> {
                 ArrayList()

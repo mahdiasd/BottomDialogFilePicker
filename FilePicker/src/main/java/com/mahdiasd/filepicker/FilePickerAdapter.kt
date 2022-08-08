@@ -29,7 +29,7 @@ class FilePickerAdapter(
     }
 
     override fun getRootLayoutId(): Int {
-        return if (pickerMode == PickerMode.Document || pickerMode == PickerMode.Audio)
+        return if (pickerMode == PickerMode.Audio)
             R.layout.item_file_picker_manager
         else
             R.layout.item_file_picker
@@ -38,7 +38,7 @@ class FilePickerAdapter(
     override fun onBind(viewHolder: BaseViewHolder, position: Int) {
         val model = viewHolder.getData(position) as FileModel
 
-        if (pickerMode == PickerMode.Document || pickerMode == PickerMode.Audio) {
+        if (pickerMode == PickerMode.Audio) {
             val itemBinding = viewHolder.binding as ItemFilePickerManagerBinding
             itemBinding.let {
                 it.item = model
@@ -88,12 +88,13 @@ class FilePickerAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun nextFolder(view: View, file: FileModel) {
         if (file.file.isDirectory && file.file.listFiles() != null) {
-            val temp: MutableList<String> = ArrayList()
+            val temp: MutableList<FileModel> = ArrayList()
             if (file.file.listFiles()!!.isEmpty()) return
+
             file.file.listFiles()?.forEach {
-                temp.add(it.path)
+                temp.add(FileModel(it.path))
             }
-            setLists(temp as List<FileModel?>?)
+            setLists(temp)
             stack.add(list)
             notifyDataSetChanged()
         }
