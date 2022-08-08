@@ -15,8 +15,15 @@ class MainActivity : AppCompatActivity() {
 
     fun test(view: View?) {
         FilePicker(
-            this, supportFragmentManager,
-            listOf(PickerMode.Image, PickerMode.Video, PickerMode.Audio, PickerMode.Document),
+            this,
+            supportFragmentManager,
+            mode = listOf(
+                PickerMode.Image,
+                PickerMode.Video,
+                PickerMode.Audio,
+                PickerMode.FILE
+            ),
+            defaultMode = PickerMode.Image,
         )
             .show()
 
