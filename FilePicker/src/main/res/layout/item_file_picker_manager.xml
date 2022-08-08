@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="com.mahdiasd.filepicker.FileModel" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="stackListSize"
+            type="Integer" />
+
+        <variable
+            name="subFolderCount"
+            type="Integer" />
+
+        <variable
+            name="presenter"
+            type="com.mahdiasd.filepicker.FilePickerAdapter" />
+
+        <variable
+            name="pickerMode"
+            type="com.mahdiasd.filepicker.PickerMode" />
+
+        <import type="com.mahdiasd.filepicker.PickerMode" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
+
+        <TextView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{presenter::back}"
+            android:padding="8dp"
+            android:text="بازگشت >"
+            android:textColor="?attr/colorPrimary"
+            android:visibility="@{position == 0 &amp;&amp; stackListSize > 1 ? View.VISIBLE : View.GONE , default = gone}" />
+
+        <ImageView
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@id/back"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="150dp"
+            android:layout_marginBottom="6dp"
+            android:layerType="software"
+            android:src="@drawable/dash_line"
+            android:visibility="@{position == 0 &amp;&amp; stackListSize > 1 ? View.VISIBLE : View.GONE , default = gone}" />
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_below="@id/separator"
+            android:onClick="@{(v) -> presenter.nextFolder(v , item)}"
+            android:padding="6dp"
+            android:src="@{pickerMode == PickerMode.Audio ? @drawable/ic_audio : @drawable/ic_document}"
+            android:tint="@color/colorPrimary" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/icon"
+            android:layout_alignBottom="@id/icon"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/frameLayout"
+            android:layout_toRightOf="@id/icon"
+            android:elevation="4dp"
+            android:gravity="left|center"
+            android:onClick="@{(v) -> presenter.nextFolder(v , item)}"
+            android:singleLine="true"
+            android:text="@{item.file.name}"
+            android:textColor="@color/black"
+            app:autoSizeMaxTextSize="16dp"
+            app:autoSizeMinTextSize="8dp"
+            app:autoSizeTextType="uniform" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/fileName"
+            android:layout_alignBottom="@id/fileName"
+            android:layout_alignParentRight="true">
+
+            <TextView
+                android:id="@+id/basket_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:onClick="@{(v) -> presenter.nextFolder(v , item)}"
+                android:text="@{`(` + subFolderCount + `)`}"
+                android:visibility="@{item.file.directory ? View.VISIBLE : View.GONE}" />
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:buttonTint="?attr/colorPrimary"
+                android:checked="@{item.selected}"
+                android:onClick="@{(v) -> presenter.checkBox(v , item)}"
+                android:visibility="@{!item.file.directory ? View.VISIBLE : View.GONE}" />
+        </FrameLayout>
+
+    </RelativeLayout>
+
+
+</layout>
