@@ -35,6 +35,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:onClick="@{(v) -> presenter.onClick(v , item)}"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/imageViewRadius" />
@@ -46,16 +47,17 @@
             android:elevation="5dp"
             android:src="@drawable/ic_play"
             android:tint="@color/white"
+            android:onClick="@{(v) -> presenter.onClick(v , item)}"
             android:visibility="@{type == PickerMode.Video ? View.VISIBLE : View.GONE , default = gone}"
             app:layout_constraintBottom_toBottomOf="@id/image"
             app:layout_constraintLeft_toLeftOf="@id/image"
             app:layout_constraintRight_toRightOf="@id/image"
             app:layout_constraintTop_toTopOf="@id/image" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:buttonTint="?attr/colorPrimary"
             android:checked="@{item.selected}"
             android:elevation="6dp"
             android:gravity="center"

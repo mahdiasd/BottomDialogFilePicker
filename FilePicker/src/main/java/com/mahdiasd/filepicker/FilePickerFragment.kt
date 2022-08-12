@@ -1,11 +1,14 @@
 package com.mahdiasd.filepicker
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,14 +19,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.onimur.handlepathoz.HandlePathOz
+import br.com.onimur.handlepathoz.HandlePathOzListener
+import br.com.onimur.handlepathoz.model.PathOz
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mahdiasd.filepicker.databinding.FilePickerFragmentBinding
+import kotlinx.coroutines.FlowPreview
+import java.io.File
 
 
 class FilePickerFragment : BottomSheetDialogFragment() {
-    private var maxSelection: Int = 10
+    private var handlePathOz: HandlePathOz? = null
 
     private var myAdapter: FilePickerAdapter? = null
     private lateinit var binding: FilePickerFragmentBinding
@@ -33,15 +41,12 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     private var imageList: MutableList<FileModel> = ArrayList()
     private var videoList: MutableList<FileModel> = ArrayList()
     private var audioList: MutableList<FileModel> = ArrayList()
-    private var docList: MutableList<FileModel> = ArrayList()
-    private var fileManagerList: MutableList<FileModel> = ArrayList()
-
 
     private var selectedFiles: MutableList<FileModel> = ArrayList()
 
-    private var filePickerListener: FilePickerListener? = null
-
     private lateinit var config: FilePicker
+    private var storageIsOpen = false
+    private val TAG = "TAG"
 
     companion object {
         fun Builder() = FilePickerFragment()
@@ -54,17 +59,33 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.file_picker_fragment, container, false)
         binding.presenter = this
-
-        checkPermission(true)
-
         binding.config = config
-        initSectionList()
+
+        if (config.mode.size == 1 && config.selectedMode == PickerMode.FILE)
+            openFileManager()
+        else
+            initSectionList()
 
         return binding.root
     }
 
     fun setConfig(filePicker: FilePicker) {
         this.config = filePicker
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkPermission()
+        if (storageIsOpen) {
+            if (config.mode.size > 1) {
+                config.mode.findLast { it != PickerMode.FILE }?.let {
+                    config.selectedMode = it
+                    config.defaultMode(it)
+                }
+                storageIsOpen = false
+            } else
+                dismiss()
+        }
     }
 
     private fun initSectionList() {
@@ -81,6 +102,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                 (LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false))
             it.adapter = sectionAdapter
         }
+
         sectionAdapter.changeMode.observe(this) {
             if (it == PickerMode.FILE) {
                 openFileManager()
@@ -93,8 +115,45 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     }
 
     private fun openFileManager() {
+        storageIsOpen = true
+        val intent = Intent()
+            .setType("*/*")
+            .setAction(Intent.ACTION_OPEN_DOCUMENT)
+            .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, config.maxSelection > 1)
+        resultLauncher.launch(intent)
 
+        handlePathOz =
+            HandlePathOz(requireContext(), object : HandlePathOzListener.MultipleUri {
+                override fun onRequestHandlePathOz(listPathOz: List<PathOz>, tr: Throwable?) {
+                    listPathOz.forEach {
+                        val file = File(it.path)
+                        if (file.exists())
+                            selectedFiles.add(FileModel(it.path))
+                    }
+                    btn(null)
+                }
+            })
     }
+
+    @OptIn(FlowPreview::class)
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            storageIsOpen = false
+            if (result.resultCode == Activity.RESULT_OK) {
+                storageIsOpen = false
+                result.data?.clipData?.also {
+                    val a: MutableList<Uri> = ArrayList()
+                    for (i in 0 until it.itemCount) {
+                        a.add(it.getItemAt(i).uri)
+                    }
+                    handlePathOz?.getListRealPath(a)
+                }
+
+                result.data?.data?.also {
+                    handlePathOz?.getListRealPath(arrayListOf(it))
+                }
+            }
+        }
 
     private fun getSectionList(): MutableList<SectionModel> {
         val temp: MutableList<SectionModel> = ArrayList()
@@ -143,13 +202,13 @@ class FilePickerFragment : BottomSheetDialogFragment() {
 
     }
 
-    private fun checkPermission(request: Boolean) {
-        requestMultiplePermissions.launch(
-            arrayOf(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        )
+    private fun checkPermission() {
+        val hasPermission =
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_CONTACTS)
+
+        if (hasPermission != PackageManager.PERMISSION_GRANTED) {
+            requestMultiplePermissions.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
+        }
     }
 
     private val requestMultiplePermissions =
@@ -162,10 +221,6 @@ class FilePickerFragment : BottomSheetDialogFragment() {
             }
         }
 
-    override fun onResume() {
-        super.onResume()
-        checkPermission(false)
-    }
 
     private fun getFiles() {
         val temp = config.mode
@@ -253,7 +308,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         val temp = getSelectedList()
 
         myAdapter =
-            FilePickerAdapter(context, temp, selectedFiles, config.selectedMode, maxSelection)
+            FilePickerAdapter(context, temp, selectedFiles, config.selectedMode, config)
 
         binding.list.let {
             it.layoutManager = handleLayoutManager()
@@ -267,12 +322,11 @@ class FilePickerFragment : BottomSheetDialogFragment() {
             binding.countFrame.visibility = if (it == 0) View.GONE else View.VISIBLE
             binding.count.text = it.toString()
         }
-        Log.e("+++++++++++", "initRecyclerView+")
     }
 
     private fun handleLayoutManager(): RecyclerView.LayoutManager {
         return when (config.selectedMode) {
-            PickerMode.Audio ->
+            PickerMode.Audio, PickerMode.FILE ->
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
             else -> {
@@ -287,18 +341,14 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     }
 
     private fun getSelectedList(): MutableList<FileModel> {
-        Log.e("+++++++++++", "getSelectedList")
         return when (config.selectedMode) {
             PickerMode.Audio -> {
-                Log.e("+++++++++++", "getSelectedList: ${audioList.size}")
                 audioList
             }
             PickerMode.Video -> {
-                Log.e("+++++++++++", "getSelectedList: ${videoList.size}")
                 videoList
             }
             PickerMode.Image -> {
-                Log.e("+++++++++++", "getSelectedList: ${imageList.size}")
                 imageList
             }
             else -> {
@@ -310,7 +360,6 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     private fun isTablet(): Boolean {
         return requireContext().resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK >= Configuration.SCREENLAYOUT_SIZE_LARGE
     }
-
 
     private fun handleBehaviorFragment() {
         try {
@@ -341,9 +390,10 @@ class FilePickerFragment : BottomSheetDialogFragment() {
 
     }
 
-    fun btn(view: View) {
-        filePickerListener?.selectedFiles(selectedFiles)
+    fun btn(view: View?) {
+        config.listener?.selectedFiles(selectedFiles)
         selectedFiles.clear()
+        dismiss()
     }
 
 }

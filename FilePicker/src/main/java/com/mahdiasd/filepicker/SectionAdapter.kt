@@ -28,11 +28,11 @@ class SectionAdapter(
         viewHolder.itemView.setOnClickListener {
             changeMode.postValue(model.mode)
             if (model.mode != PickerMode.FILE)
-                refreshSelceted(model)
+                refreshSelected(model)
         }
     }
 
-    private fun refreshSelceted(model: SectionModel) {
+    private fun refreshSelected(model: SectionModel) {
         list.forEach { it.selected = false }
         model.selected = true
     }

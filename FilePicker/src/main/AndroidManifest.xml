@@ -9,10 +9,12 @@
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
 
-    <application android:requestLegacyExternalStorage="true">
+    <application
+
+        android:requestLegacyExternalStorage="true">
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
+            android:authorities="com.mahdiasd.filepicker.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

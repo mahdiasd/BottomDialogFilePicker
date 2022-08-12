@@ -11,6 +11,10 @@
             type="com.mahdiasd.filepicker.FileModel" />
 
         <variable
+            name="activeColor"
+            type="Integer" />
+
+        <variable
             name="position"
             type="Integer" />
 
@@ -110,12 +114,11 @@
                 android:text="@{`(` + subFolderCount + `)`}"
                 android:visibility="@{item.file.directory ? View.VISIBLE : View.GONE}" />
 
-            <CheckBox
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/checkbox"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_gravity="center"
-                android:buttonTint="?attr/colorPrimary"
                 android:checked="@{item.selected}"
                 android:onClick="@{(v) -> presenter.checkBox(v , item)}"
                 android:visibility="@{!item.file.directory ? View.VISIBLE : View.GONE}" />

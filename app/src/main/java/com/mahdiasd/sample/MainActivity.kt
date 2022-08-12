@@ -1,9 +1,12 @@
 package com.mahdiasd.sample
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.mahdiasd.filepicker.FileModel
 import com.mahdiasd.filepicker.FilePicker
+import com.mahdiasd.filepicker.FilePickerListener
 import com.mahdiasd.filepicker.PickerMode
 
 class MainActivity : AppCompatActivity() {
@@ -14,18 +17,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun test(view: View?) {
-        FilePicker(
-            this,
-            supportFragmentManager,
-            mode = listOf(
-                PickerMode.Image,
-                PickerMode.Video,
-                PickerMode.Audio,
-                PickerMode.FILE
-            ),
-            defaultMode = PickerMode.Image,
-        )
+        FilePicker(this, supportFragmentManager)
+            .setMode(PickerMode.FILE,PickerMode.Audio)
+            .defaultMode(PickerMode.FILE)
+            .setMaxSelection(1)
+            .setListener(object : FilePickerListener {
+                override fun selectedFiles(list: List<FileModel>?) {
+                    Log.e("TAG", "selectedFiles: ${list.toString()}")
+                }
+            })
             .show()
-
     }
 }

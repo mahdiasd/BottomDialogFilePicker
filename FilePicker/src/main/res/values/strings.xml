@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Sample</string>
+    <string name="failedOpenFile">Error when open file, please choose another!</string>
+    <string name="file_picker_open_storage">Open Storage</string>
+
 </resources>
