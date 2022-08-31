@@ -55,17 +55,66 @@
                 android:backgroundTint="@color/black"
                 android:elevation="5dp" />
 
+
+            <EditText
+                android:id="@+id/edt"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@id/image"
+                android:background="@drawable/shape_radius_20"
+                android:hint="جستجو..."
+                android:onTextChanged="@{presenter::search}"
+                android:paddingLeft="16dp"
+                android:paddingRight="38dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:visibility="@{config.selectedMode != PickerMode.FILE ? View.VISIBLE : View.GONE}" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignTop="@id/edt"
+                android:layout_alignRight="@id/edt"
+                android:layout_alignBottom="@id/edt"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/ic_search"
+                android:visibility="@{config.selectedMode != PickerMode.FILE ? View.VISIBLE : View.GONE}" />
+
+            <TextView
+                android:id="@+id/selectedItemFromSdCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edt"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@{config.activeColor}"
+                android:elevation="2dp"
+                android:gravity="center"
+                android:onClick="@{presenter::openStorage}"
+                android:padding="8dp"
+                android:text="@{config.openStorageText}"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:visibility="@{config.selectedMode == PickerMode.FILE ? View.VISIBLE : View.GONE}" />
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/footer"
+                android:layout_below="@id/selectedItemFromSdCard"
                 android:layout_marginBottom="8dp"
                 android:clipToPadding="false"
                 android:minHeight="350dp"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:visibility="visible" />
+
 
             <LinearLayout
                 android:id="@+id/footer"

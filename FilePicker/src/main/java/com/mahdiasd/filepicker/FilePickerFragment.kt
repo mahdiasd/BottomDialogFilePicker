@@ -19,6 +19,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import br.com.onimur.handlepathoz.HandlePathOz
 import br.com.onimur.handlepathoz.HandlePathOzListener
 import br.com.onimur.handlepathoz.model.PathOz
@@ -49,7 +50,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     private val TAG = "TAG"
 
     companion object {
-        fun Builder() = FilePickerFragment()
+        fun newInstance() = FilePickerFragment()
     }
 
     override fun onCreateView(
@@ -76,16 +77,6 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     override fun onResume() {
         super.onResume()
         checkPermission()
-        if (storageIsOpen) {
-            if (config.mode.size > 1) {
-                config.mode.findLast { it != PickerMode.FILE }?.let {
-                    config.selectedMode = it
-                    config.defaultMode(it)
-                }
-                storageIsOpen = false
-            } else
-                dismiss()
-        }
     }
 
     private fun initSectionList() {
@@ -104,12 +95,9 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         }
 
         sectionAdapter.changeMode.observe(this) {
-            if (it == PickerMode.FILE) {
-                openFileManager()
-            } else {
-                config.selectedMode = it
-                initRecyclerView()
-            }
+            config.selectedMode = it
+            initRecyclerView()
+
         }
 
     }
@@ -127,10 +115,13 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                 override fun onRequestHandlePathOz(listPathOz: List<PathOz>, tr: Throwable?) {
                     listPathOz.forEach {
                         val file = File(it.path)
-                        if (file.exists())
-                            selectedFiles.add(FileModel(it.path))
+                        if (file.exists()) {
+                            val fileModel = FileModel(it.path)
+                            fileModel.selected = true
+                            selectedFiles.add(fileModel)
+                        }
                     }
-                    btn(null)
+                    initRecyclerView()
                 }
             })
     }
@@ -163,7 +154,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                     temp.add(
                         SectionModel(
                             config.fileManagerText,
-                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_file),
+                            config.fileManagerIcon,
                             PickerMode.FILE
                         )
                     )
@@ -172,7 +163,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                     temp.add(
                         SectionModel(
                             config.audioText,
-                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_audio),
+                            config.audioIcon,
                             PickerMode.Audio
                         )
                     )
@@ -181,7 +172,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                     temp.add(
                         SectionModel(
                             config.videoText,
-                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_video),
+                            config.videoIcon,
                             PickerMode.Video
                         )
                     )
@@ -190,7 +181,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                     temp.add(
                         SectionModel(
                             config.imageText,
-                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_image),
+                            config.imageIcon,
                             PickerMode.Image
                         )
                     )
@@ -199,7 +190,6 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         }
         temp.find { it.mode == config.selectedMode }?.selected = true
         return temp
-
     }
 
     private fun checkPermission() {
@@ -254,7 +244,6 @@ class FilePickerFragment : BottomSheetDialogFragment() {
             val dataColumnIndex: Int = cursor.getColumnIndex(MediaStore.Images.Media.DATA)
             imageList.add(FileModel(cursor.getString(dataColumnIndex)))
         }
-        imageList.reverse()
         cursor.close()
     }
 
@@ -298,24 +287,32 @@ class FilePickerFragment : BottomSheetDialogFragment() {
             val dataColumnIndex: Int = cursor.getColumnIndex(MediaStore.Audio.Media.DATA)
             audioList.add(FileModel(cursor.getString(dataColumnIndex)))
         }
-        audioList.reverse()
         cursor.close()
     }
 
     private fun initRecyclerView() {
         binding.loading = false
 
-        val temp = getSelectedList()
+        var temp = getSelectedList()
+        if (binding.edt.text.toString().isNotEmpty() && config.selectedMode != PickerMode.FILE)
+            temp = temp.filter {
+                it.file.name.contains(
+                    binding.edt.text.toString(),
+                    false
+                )
+            } as MutableList<FileModel>
 
-        myAdapter =
-            FilePickerAdapter(context, temp, selectedFiles, config.selectedMode, config)
+
+        myAdapter = FilePickerAdapter(context, temp, selectedFiles, config.selectedMode, config)
 
         binding.list.let {
             it.layoutManager = handleLayoutManager()
             it.adapter = myAdapter
+            it.disableItemAnimator()
         }
 
         binding.listSize = temp.size
+
         handleBehaviorFragment()
 
         myAdapter!!.liveData.observe(this) {
@@ -352,7 +349,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                 imageList
             }
             else -> {
-                ArrayList()
+                selectedFiles
             }
         }
     }
@@ -390,10 +387,24 @@ class FilePickerFragment : BottomSheetDialogFragment() {
 
     }
 
+    fun openStorage(view: View?) {
+        openFileManager()
+    }
+
+    fun search(s: CharSequence, start: Int, before: Int, count: Int) {
+        initRecyclerView()
+    }
+
+
     fun btn(view: View?) {
         config.listener?.selectedFiles(selectedFiles)
         selectedFiles.clear()
         dismiss()
+    }
+
+    fun RecyclerView.disableItemAnimator() {
+        //disable blink when notifyDataSetChanged
+        (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
     }
 
 }

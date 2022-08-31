@@ -18,9 +18,9 @@ class MainActivity : AppCompatActivity() {
 
     fun test(view: View?) {
         FilePicker(this, supportFragmentManager)
-            .setMode(PickerMode.FILE,PickerMode.Audio)
-            .defaultMode(PickerMode.FILE)
-            .setMaxSelection(1)
+            .setMode(PickerMode.FILE, PickerMode.Audio, PickerMode.Image, PickerMode.Video)
+            .setDefaultMode(PickerMode.Image)
+            .setMaxSelection(10)
             .setListener(object : FilePickerListener {
                 override fun selectedFiles(list: List<FileModel>?) {
                     Log.e("TAG", "selectedFiles: ${list.toString()}")

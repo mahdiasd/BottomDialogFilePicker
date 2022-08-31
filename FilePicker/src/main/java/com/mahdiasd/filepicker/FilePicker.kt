@@ -1,6 +1,7 @@
 package com.mahdiasd.filepicker
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
@@ -19,6 +20,13 @@ data class FilePicker(
     var documentText: String = "Document",
     var fileManagerText: String = "File",
     var imageText: String = "Image",
+    var openStorageText: String = "Open Storage",
+
+    var videoIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_video),
+    var audioIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_audio),
+    var documentIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_document),
+    var fileManagerIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_file),
+    var imageIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_image),
 
     var showFileWhenClick: Boolean = false,
     var maxSelection: Int = 10,
@@ -29,7 +37,7 @@ data class FilePicker(
 ) :
     BaseObservable() {
     private val fragmentTag = "mahdiasd_file_picker"
-    private var filePickerFragment = FilePickerFragment.Builder()
+    private var filePickerFragment = FilePickerFragment.newInstance()
 
     @Bindable
     var selectedMode: PickerMode = defaultMode()
@@ -44,6 +52,21 @@ data class FilePicker(
         return this
     }
 
+    fun setIcons(
+        videoIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_video),
+        audioIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_audio),
+        documentIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_document),
+        fileManagerIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_file),
+        imageIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_image),
+    ): FilePicker {
+        this.videoIcon
+        this.audioIcon
+        this.documentIcon
+        this.fileManagerIcon
+        this.imageIcon
+        return this
+    }
+
     fun setMode(vararg modes: PickerMode): FilePicker {
         this.mode = modes.toList()
         return this
@@ -54,8 +77,7 @@ data class FilePicker(
         return this
     }
 
-
-    fun showFileWhenClick(value: Boolean): FilePicker {
+    fun setShowFileWhenClick(value: Boolean): FilePicker {
         this.showFileWhenClick = value
         return this
     }
@@ -84,31 +106,33 @@ data class FilePicker(
         return this
     }
 
-    fun defaultMode(defaultMode: PickerMode): FilePicker {
+    fun setDefaultMode(defaultMode: PickerMode): FilePicker {
         this.defaultMode = defaultMode
         return this
     }
 
     fun defaultMode(): PickerMode {
-        return if (defaultMode == null || defaultMode == PickerMode.FILE) {
-            if (mode.first() == PickerMode.FILE && mode.size != 1) {
-                mode[1]
-            } else
-                mode.first()
-        } else
+        return if (defaultMode == null) {
+            if (mode.isEmpty())
+                PickerMode.Image
+            else mode.first()
+        } else {
             defaultMode!!
+        }
     }
 
     fun setCustomText(
         videoText: String = "Video",
         audioText: String = "Audio",
         fileManagerText: String = "File Manager",
-        imageText: String = "Image"
+        imageText: String = "Image",
+        openStorageText: String = "Open Storage"
     ): FilePicker {
         this.videoText = videoText
         this.audioText = audioText
         this.fileManagerText = fileManagerText
         this.imageText = imageText
+        this.openStorageText = openStorageText
         return this
     }
 
