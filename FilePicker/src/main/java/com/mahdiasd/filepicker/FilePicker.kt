@@ -117,7 +117,8 @@ data class FilePicker(
                 PickerMode.Image
             else mode.first()
         } else {
-            defaultMode!!
+            if (!mode.contains(defaultMode)) mode.first()
+            else defaultMode!!
         }
     }
 
