@@ -142,13 +142,17 @@ data class FilePicker(
         audioText: String = "Audio",
         fileManagerText: String = "File Manager",
         imageText: String = "Image",
-        openStorageText: String = "Open Storage"
+        openStorageText: String = "Open Storage",
+        maxTotalFileSizeText: String = "Max size for total files is",
+        maxEachFileSizeText: String = "Max size for each files is",
     ): FilePicker {
         this.videoText = videoText
         this.audioText = audioText
         this.fileManagerText = fileManagerText
         this.imageText = imageText
         this.openStorageText = openStorageText
+        this.maxTotalFileSizeText = maxTotalFileSizeText
+        this.maxEachFileSizeText = maxEachFileSizeText
         return this
     }
 
