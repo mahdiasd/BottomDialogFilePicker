@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 32
-        applicationId "com.mahdiasd.filepicker"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
