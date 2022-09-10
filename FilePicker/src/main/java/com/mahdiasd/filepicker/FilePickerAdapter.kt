@@ -70,7 +70,14 @@ class FilePickerAdapter(
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun checkBox(view: View?, file: FileModel) {
+
+        if (!checkMaxSize(file) && !file.selected) {
+            notifyDataSetChanged()
+            return
+        }
+
         file.selected = !file.selected
         if (selectedFiles.size >= config.maxSelection) {
             selectedFiles.last().selected = false
@@ -83,6 +90,33 @@ class FilePickerAdapter(
             selectedFiles.remove(file)
 
         liveData.postValue(selectedFiles.size)
+    }
+
+    private fun checkMaxSize(file: FileModel): Boolean {
+        val fileSize = (file.file.length() / 1024).toInt()
+        var totalSize = fileSize
+
+        selectedFiles.forEach {
+            totalSize += (it.file.length() / 1024).toInt()
+        }
+
+        return when {
+            config.eachFileSize != null && fileSize > config.eachFileSize!! -> {
+                Toast.makeText(
+                    context, "${config.maxEachFileSizeText} ${config.eachFileSize}kb",
+                    Toast.LENGTH_LONG
+                ).show()
+                false
+            }
+            config.totalFileSize != null && totalSize > config.totalFileSize!! -> {
+                Toast.makeText(
+                    context, "${config.maxTotalFileSizeText} ${config.totalFileSize}kb",
+                    Toast.LENGTH_LONG
+                ).show()
+                false
+            }
+            else -> true
+        }
     }
 
     fun onClick(view: View, fileModel: FileModel) {

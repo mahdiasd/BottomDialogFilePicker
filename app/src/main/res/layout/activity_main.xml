@@ -46,6 +46,7 @@
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/storage"
+                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -54,6 +55,7 @@
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/audio"
                     android:layout_width="wrap_content"
+                    android:checked="true"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Audio" />
@@ -63,12 +65,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:checked="true"
                     android:text="Image" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/video"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:layout_weight="1"
                     android:text="Video" />
             </LinearLayout>

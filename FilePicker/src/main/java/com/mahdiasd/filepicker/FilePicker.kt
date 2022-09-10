@@ -21,6 +21,8 @@ data class FilePicker(
     var fileManagerText: String = "File",
     var imageText: String = "Image",
     var openStorageText: String = "Open Storage",
+    var maxTotalFileSizeText: String = "Max size for total files is ",
+    var maxEachFileSizeText: String = "Max size for each files is ",
 
     var videoIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_video),
     var audioIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_audio),
@@ -30,6 +32,9 @@ data class FilePicker(
 
     var showFileWhenClick: Boolean = false,
     var maxSelection: Int = 10,
+
+    var totalFileSize: Int? = null,
+    var eachFileSize: Int? = null,
 
     var activeColor: Int = ContextCompat.getColor(context, R.color.colorPrimary),
     var deActiveColor: Int = ContextCompat.getColor(context, R.color.gray),
@@ -74,6 +79,16 @@ data class FilePicker(
 
     fun setMaxSelection(value: Int): FilePicker {
         this.maxSelection = value
+        return this
+    }
+
+    fun setTotalFileSize(value: Int): FilePicker {
+        this.totalFileSize = value
+        return this
+    }
+
+    fun setEachFileSize(value: Int): FilePicker {
+        this.eachFileSize = value
         return this
     }
 

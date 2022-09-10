@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             .setMode(*modes.toTypedArray())
             .setDefaultMode(PickerMode.Image)
             .setMaxSelection(max)
+            .setTotalFileSize(1500)
             .setCustomText(
                 binding.videoTitle.text.toString(),
                 binding.audioTitle.text.toString(),
