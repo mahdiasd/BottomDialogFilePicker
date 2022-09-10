@@ -117,14 +117,45 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                         val file = File(it.path)
                         if (file.exists()) {
                             val fileModel = FileModel(it.path)
-                            fileModel.selected = true
-                            selectedFiles.add(fileModel)
+                            if (checkMaxSize(fileModel) && selectedFiles.size < config.maxSelection) {
+                                fileModel.selected = true
+                                selectedFiles.add(fileModel)
+                            }
                         }
                     }
                     initRecyclerView()
                 }
             })
     }
+
+
+    private fun checkMaxSize(file: FileModel): Boolean {
+        val fileSize = (file.file.length() / 1024).toInt()
+        var totalSize = fileSize
+
+        selectedFiles.forEach {
+            totalSize += (it.file.length() / 1024).toInt()
+        }
+
+        return when {
+            config.eachFileSize != null && fileSize > config.eachFileSize!! -> {
+                Toast.makeText(
+                    context, "${config.maxEachFileSizeText} ${config.eachFileSize}kb",
+                    Toast.LENGTH_LONG
+                ).show()
+                false
+            }
+            config.totalFileSize != null && totalSize > config.totalFileSize!! -> {
+                Toast.makeText(
+                    context, "${config.maxTotalFileSizeText} ${config.totalFileSize}kb",
+                    Toast.LENGTH_LONG
+                ).show()
+                false
+            }
+            else -> true
+        }
+    }
+
 
     @OptIn(FlowPreview::class)
     private var resultLauncher =
