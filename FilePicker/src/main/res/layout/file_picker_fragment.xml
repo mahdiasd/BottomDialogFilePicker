@@ -62,7 +62,7 @@
                 android:layout_height="45dp"
                 android:layout_below="@id/image"
                 android:background="@drawable/shape_radius_20"
-                android:hint="جستجو..."
+                android:hint="@string/mahdiasd_file_picker_search"
                 android:onTextChanged="@{presenter::search}"
                 android:paddingLeft="16dp"
                 android:paddingRight="38dp"
