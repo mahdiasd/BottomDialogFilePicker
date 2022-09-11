@@ -121,6 +121,8 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                                 fileModel.selected = true
                                 selectedFiles.add(fileModel)
                             }
+                        }else{
+                            Toast.makeText(requireContext(), getString(R.string.mahdiasd_file_picker_cant_find_this_file), Toast.LENGTH_SHORT).show()
                         }
                     }
                     initRecyclerView()

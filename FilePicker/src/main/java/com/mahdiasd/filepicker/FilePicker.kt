@@ -15,14 +15,13 @@ data class FilePicker(
     var mode: List<PickerMode> = listOf(PickerMode.Image, PickerMode.Video, PickerMode.Audio),
     private var defaultMode: PickerMode? = null,
 
-    var videoText: String = "Video",
-    var audioText: String = "Audio",
-    var documentText: String = "Document",
-    var fileManagerText: String = "File",
-    var imageText: String = "Image",
-    var openStorageText: String = "Open Storage",
-    var maxTotalFileSizeText: String = "Max size for total files is ",
-    var maxEachFileSizeText: String = "Max size for each files is ",
+    var videoText: String = context.getString(R.string.mahdiasd_file_picker_video),
+    var audioText: String = context.getString(R.string.mahdiasd_file_picker_audio),
+    var fileManagerText: String = context.getString(R.string.mahdiasd_file_picker_file_manager),
+    var imageText: String = context.getString(R.string.mahdiasd_file_picker_image),
+    var openStorageText: String = context.getString(R.string.mahdiasd_file_picker_open_storage),
+    var maxTotalFileSizeText: String = context.getString(R.string.mahdiasd_file_picker_max_total_size),
+    var maxEachFileSizeText: String = context.getString(R.string.mahdiasd_file_picker_max_each_size),
 
     var videoIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_video),
     var audioIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_audio),
@@ -82,12 +81,12 @@ data class FilePicker(
         return this
     }
 
-    fun setTotalFileSize(value: Int): FilePicker {
+    fun setMaxTotalFileSize(value: Int): FilePicker {
         this.totalFileSize = value
         return this
     }
 
-    fun setEachFileSize(value: Int): FilePicker {
+    fun setMaxEachFileSize(value: Int): FilePicker {
         this.eachFileSize = value
         return this
     }
@@ -138,13 +137,13 @@ data class FilePicker(
     }
 
     fun setCustomText(
-        videoText: String = "Video",
-        audioText: String = "Audio",
-        fileManagerText: String = "File Manager",
-        imageText: String = "Image",
-        openStorageText: String = "Open Storage",
-        maxTotalFileSizeText: String = "Max size for total files is",
-        maxEachFileSizeText: String = "Max size for each files is",
+        videoText: String = context.getString(R.string.mahdiasd_file_picker_video),
+        audioText: String = context.getString(R.string.mahdiasd_file_picker_audio),
+        fileManagerText: String = context.getString(R.string.mahdiasd_file_picker_file_manager),
+        imageText: String = context.getString(R.string.mahdiasd_file_picker_image),
+        openStorageText: String = context.getString(R.string.mahdiasd_file_picker_open_storage),
+        maxTotalFileSizeText: String = context.getString(R.string.mahdiasd_file_picker_max_total_size),
+        maxEachFileSizeText: String = context.getString(R.string.mahdiasd_file_picker_max_each_size),
     ): FilePicker {
         this.videoText = videoText
         this.audioText = audioText

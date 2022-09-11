@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Sample</string>
-    <string name="failedOpenFile">Error when open file, please choose another!</string>
-    <string name="file_picker_open_storage">Open Storage</string>
-
+    <string name="mahdiasd_file_picker_failed_open_file">Error when open file, please choose another!</string>
+    <string name="mahdiasd_file_picker_cant_find_this_file">can`t find this file</string>
+    <string name="mahdiasd_file_picker_video">Video</string>
+    <string name="mahdiasd_file_picker_audio">Audio</string>
+    <string name="mahdiasd_file_picker_file_manager">File Manager</string>
+    <string name="mahdiasd_file_picker_image">Image</string>
+    <string name="mahdiasd_file_picker_open_storage">Open Storage</string>
+    <string name="mahdiasd_file_picker_max_total_size">Max size for total files is</string>
+    <string name="mahdiasd_file_picker_max_each_size">Max size for each files is</string>
 </resources>

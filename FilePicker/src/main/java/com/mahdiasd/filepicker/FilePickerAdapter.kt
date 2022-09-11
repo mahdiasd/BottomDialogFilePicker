@@ -189,7 +189,7 @@ class FilePickerAdapter(
             d("TAG", "openFile: ${e.message}")
             Toast.makeText(
                 context,
-                context.resources.getString(R.string.failedOpenFile),
+                context.resources.getString(R.string.mahdiasd_file_picker_failed_open_file),
                 Toast.LENGTH_SHORT
             ).show()
         }
