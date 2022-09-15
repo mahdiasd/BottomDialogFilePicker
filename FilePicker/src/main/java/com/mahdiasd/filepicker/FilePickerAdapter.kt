@@ -160,7 +160,7 @@ class FilePickerAdapter(
         val imageUri = Uri.fromFile(file) ?: return
         Glide.with(view.context)
             .load(imageUri)
-            .placeholder(R.color.gray)
+            .placeholder(R.color.file_picker_gray)
             .skipMemoryCache(false)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(view)

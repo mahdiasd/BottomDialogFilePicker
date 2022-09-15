@@ -48,7 +48,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         val max =
-            if (binding.maxSelection.text.isEmpty())1 else binding.maxSelection.text.toString()
+            if (binding.maxSelection.text.isEmpty()) 1 else binding.maxSelection.text.toString()
+                .toInt()
+
+        val maxTotalSize =
+            if (binding.maxTotalSize.text.isEmpty()) 1000 * 1000 else binding.maxTotalSize.text.toString()
+                .toInt()
+
+        val maxEachSize =
+            if (binding.maxTotalEachSize.text.isEmpty()) 1000 * 1000 else binding.maxTotalEachSize.text.toString()
                 .toInt()
 
         val activeColor =
@@ -63,7 +71,8 @@ class MainActivity : AppCompatActivity() {
             .setMode(*modes.toTypedArray())
             .setDefaultMode(PickerMode.Image)
             .setMaxSelection(max)
-            .setMaxEachFileSize(1500)
+            .setMaxEachFileSize(maxEachSize)
+            .setMaxTotalFileSize(maxTotalSize)
             .setCustomText(
                 binding.videoTitle.text.toString(),
                 binding.audioTitle.text.toString(),

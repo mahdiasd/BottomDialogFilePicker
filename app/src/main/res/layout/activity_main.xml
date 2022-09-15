@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -46,18 +47,18 @@
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/storage"
-                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:checked="true"
                     android:text="Storage" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/audio"
                     android:layout_width="wrap_content"
-                    android:checked="true"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:checked="true"
                     android:text="Audio" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
@@ -72,16 +73,11 @@
                     android:id="@+id/video"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
                     android:layout_weight="1"
+                    android:checked="true"
                     android:text="Video" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/colorAccent" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -98,12 +94,6 @@
                 android:layout_height="wrap_content"
                 android:text="Show Preview" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/colorAccent" />
-
 
             <TextView
                 android:layout_width="match_parent"
@@ -119,17 +109,58 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/shape_border"
                 android:hint="enter max number"
                 android:inputType="number"
+                android:padding="8dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <ImageView
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/colorAccent" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Max Total Size (kb):"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/maxTotalSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_border"
+                android:hint="enter max total size"
+                android:inputType="number"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Max Size For Each Item (kb):"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/maxTotalEachSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_border"
+                android:hint="enter max size for each item"
+                android:inputType="number"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -145,17 +176,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+
+                android:background="@drawable/shape_border"
                 android:hint="enter hex color like #E91E63"
                 android:inputType="number"
+                android:padding="8dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/colorAccent" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -171,17 +200,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/shape_border"
                 android:hint="enter hex color like #E91E63"
+
                 android:inputType="number"
+                android:padding="8dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/colorAccent" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -197,17 +224,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/shape_border"
+
                 android:hint="enter hex color like #E91E63"
                 android:inputType="number"
+                android:padding="8dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/colorAccent" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -264,20 +289,21 @@
 
             <EditText
                 android:id="@+id/openStorageTitle"
-                android:text="Open Storage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:gravity="center"
-                android:hint="Open Storage" />
+                android:hint="Open Storage"
+                android:text="Open Storage" />
 
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:onClick="btn"
-                android:text="Open Dialog" />
+                android:text="Open Dialog"
+                app:backgroundTint="@color/colorPrimary" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

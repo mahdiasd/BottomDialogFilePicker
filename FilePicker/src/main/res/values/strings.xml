@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Sample</string>
+
     <string name="mahdiasd_file_picker_failed_open_file">Error when open file, please choose another!</string>
     <string name="mahdiasd_file_picker_cant_find_this_file">Can`t find this file</string>
     <string name="mahdiasd_file_picker_video">Video</string>

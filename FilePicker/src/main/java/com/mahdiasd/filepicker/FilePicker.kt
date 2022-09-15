@@ -36,7 +36,7 @@ data class FilePicker(
     var eachFileSize: Int? = null,
 
     var activeColor: Int = ContextCompat.getColor(context, R.color.colorPrimary),
-    var deActiveColor: Int = ContextCompat.getColor(context, R.color.gray),
+    var deActiveColor: Int = ContextCompat.getColor(context, R.color.file_picker_gray),
     var cardBackgroundColor: Int = ContextCompat.getColor(context, R.color.white),
 ) :
     BaseObservable() {
