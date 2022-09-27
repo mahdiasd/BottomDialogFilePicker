@@ -146,7 +146,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="enter hex color like #E91E63"
-                android:inputType="number"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -172,7 +171,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="enter hex color like #E91E63"
-                android:inputType="number"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -198,7 +196,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="enter hex color like #E91E63"
-                android:inputType="number"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
