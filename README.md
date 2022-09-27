@@ -10,13 +10,9 @@ No Required Permission
 ## Screenshots
 
 ![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/1.png)
-
 ![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/2.png)
-
 ![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/3.png)
-
 ![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/4.png)
-
 ![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/5.png)
 
 ## Installation
