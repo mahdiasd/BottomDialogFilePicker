@@ -35,7 +35,7 @@ Add it in your root build.gradle at the end of repositories:
 
 ```bash
   dependencies {
-	        implementation 'com.github.mahdiasd:BottomDialogFilePicker:1.0.0'
+	        implementation 'com.github.mahdiasd:BottomDialogFilePicker:1.0.2'
 	}
 ```
 ## Ho To Use
