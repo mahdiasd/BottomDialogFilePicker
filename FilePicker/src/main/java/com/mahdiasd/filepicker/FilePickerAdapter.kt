@@ -65,6 +65,7 @@ class FilePickerAdapter(
                     it.presenter = this
                     it.type = config.selectedMode
                     it.checkbox.buttonTintList = ColorStateList.valueOf(config.activeColor)
+                    it.view.setColorFilter(config.cardBackgroundColor)
                 }
             }
         }

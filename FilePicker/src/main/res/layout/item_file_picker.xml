@@ -19,6 +19,10 @@
         <variable
             name="type"
             type="PickerMode" />
+
+        <variable
+            name="config"
+            type="com.mahdiasd.filepicker.FilePicker" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,11 +35,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:onClick="@{(v) -> presenter.onClick(v , item)}"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:onClick="@{(v) -> presenter.onClick(v , item)}"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/imageViewRadius" />
@@ -45,25 +49,37 @@
             android:layout_height="48dp"
             android:layout_centerInParent="true"
             android:elevation="5dp"
+            android:onClick="@{(v) -> presenter.onClick(v , item)}"
             android:src="@drawable/ic_play"
             android:tint="@color/white"
-            android:onClick="@{(v) -> presenter.onClick(v , item)}"
             android:visibility="@{type == PickerMode.Video ? View.VISIBLE : View.GONE , default = gone}"
             app:layout_constraintBottom_toBottomOf="@id/image"
             app:layout_constraintLeft_toLeftOf="@id/image"
             app:layout_constraintRight_toRightOf="@id/image"
             app:layout_constraintTop_toTopOf="@id/image" />
 
+        <ImageView
+            android:id="@+id/view"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/shape_square"
+            android:layout_margin="4dp"
+            android:elevation="6dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+             />
+
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:checked="@{item.selected}"
             android:elevation="6dp"
-            android:gravity="center"
             android:onClick="@{(v) -> presenter.checkBox(v , item)}"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintRight_toRightOf="@id/view"
+            app:layout_constraintLeft_toLeftOf="@id/view"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            app:layout_constraintTop_toTopOf="@id/view" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

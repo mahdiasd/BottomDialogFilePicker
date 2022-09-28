@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val max =
-            if (binding.maxSelection.text.isEmpty())1 else binding.maxSelection.text.toString()
+            if (binding.maxSelection.text.isEmpty()) 1 else binding.maxSelection.text.toString()
                 .toInt()
 
         val activeColor =
@@ -59,10 +59,14 @@ class MainActivity : AppCompatActivity() {
             if (binding.deActiveColor.text.isEmpty()) "#A4A4A4" else binding.deActiveColor.text.toString()
 
 
+        val cardBackgroundColor =
+            if (binding.cardViewColor.text.isEmpty()) "#ffffff" else binding.cardViewColor.text.toString()
+
+
         FilePicker(this, supportFragmentManager)
             .setMode(*modes.toTypedArray())
             .setDefaultMode(PickerMode.Image)
-            .setMaxSelection(max)
+            .setMaxSelection(max).setCardBackgroundColor(Color.parseColor(cardBackgroundColor))
             .setCustomText(
                 binding.videoTitle.text.toString(),
                 binding.audioTitle.text.toString(),

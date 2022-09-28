@@ -37,8 +37,6 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     private var myAdapter: FilePickerAdapter? = null
     private lateinit var binding: FilePickerFragmentBinding
 
-    private var totalFiles: MutableList<String> = ArrayList()
-
     private var imageList: MutableList<FileModel> = ArrayList()
     private var videoList: MutableList<FileModel> = ArrayList()
     private var audioList: MutableList<FileModel> = ArrayList()
@@ -47,7 +45,6 @@ class FilePickerFragment : BottomSheetDialogFragment() {
 
     private lateinit var config: FilePicker
     private var storageIsOpen = false
-    private val TAG = "TAG"
 
     companion object {
         fun newInstance() = FilePickerFragment()
