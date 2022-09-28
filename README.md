@@ -9,7 +9,12 @@ Search in Files
 
 Support android 10+ 
 
+Expandable and scrollable dialog
+
+Full Customaizable (Color / text / minimum and maximum selected file size / ...)
+
 No required runtime permission
+
 
 ## Screenshots
 
