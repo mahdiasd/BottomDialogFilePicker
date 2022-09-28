@@ -11,7 +11,7 @@ Support android 10+
 
 Expandable and scrollable dialog
 
-Full Customaizable (Color / text / minimum and maximum selected file size / ...)
+Full Customisable (Color / text / minimum and maximum selected file size / ...)
 
 No required runtime permission
 
@@ -25,8 +25,6 @@ No required runtime permission
 ![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/5.png)
 
 ## Installation
-
-[![](https://jitpack.io/v/mahdiasd/BottomDialogFilePicker.svg)](https://jitpack.io/#mahdiasd/BottomDialogFilePicker)
 
 #### Step 1. Add the JitPack repository to your build file
 
