@@ -1,11 +1,15 @@
 
 # Bottom Dialog Android Picker
 
-A android bottom dialog picker for all version of android
+[![](https://jitpack.io/v/mahdiasd/BottomDialogFilePicker.svg)](https://jitpack.io/#mahdiasd/BottomDialogFilePicker)
 
-Support android 10+
+A android bottom dialog picker like telegram for all version of android
 
-No Required Permission
+Search in Files
+
+Support android 10+ 
+
+No required runtime permission
 
 ## Screenshots
 
@@ -16,6 +20,8 @@ No Required Permission
 ![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/5.png)
 
 ## Installation
+
+[![](https://jitpack.io/v/mahdiasd/BottomDialogFilePicker.svg)](https://jitpack.io/#mahdiasd/BottomDialogFilePicker)
 
 #### Step 1. Add the JitPack repository to your build file
 
