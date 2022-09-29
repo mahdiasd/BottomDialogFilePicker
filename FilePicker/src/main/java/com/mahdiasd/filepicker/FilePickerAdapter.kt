@@ -64,8 +64,8 @@ class FilePickerAdapter(
                     glideSdCart(itemBinding.image, model.path)
                     it.presenter = this
                     it.type = config.selectedMode
-                    it.checkbox.buttonTintList = ColorStateList.valueOf(config.activeColor)
-                    it.view.setColorFilter(config.cardBackgroundColor)
+//                    it.checkbox.buttonTintList = ColorStateList.valueOf(config.activeColor)
+                    it.checkbox.setColorFilter(config.cardBackgroundColor)
                 }
             }
         }
@@ -73,7 +73,6 @@ class FilePickerAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun checkBox(view: View?, file: FileModel) {
-
         if (!checkMaxSize(file) && !file.selected) {
             notifyDataSetChanged()
             return

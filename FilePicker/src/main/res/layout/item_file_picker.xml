@@ -59,27 +59,18 @@
             app:layout_constraintTop_toTopOf="@id/image" />
 
         <ImageView
-            android:id="@+id/view"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/shape_square"
+            android:id="@+id/checkbox"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/shape_circle"
+            android:backgroundTint="@color/white"
+            android:src="@{item.selected ? @drawable/ic_done : @drawable/shape_circle}"
+            android:tint="@{config.activeColor}"
             android:layout_margin="4dp"
             android:elevation="6dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:checked="@{item.selected}"
-            android:elevation="6dp"
             android:onClick="@{(v) -> presenter.checkBox(v , item)}"
-            app:layout_constraintRight_toRightOf="@id/view"
-            app:layout_constraintLeft_toLeftOf="@id/view"
-            app:layout_constraintBottom_toBottomOf="@id/view"
-            app:layout_constraintTop_toTopOf="@id/view" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
