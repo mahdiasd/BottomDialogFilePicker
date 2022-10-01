@@ -3,7 +3,7 @@
 
 [![](https://jitpack.io/v/mahdiasd/BottomDialogFilePicker.svg)](https://jitpack.io/#mahdiasd/BottomDialogFilePicker)
 
-A android bottom dialog picker like telegram for all version of android (1 ... , 10 , 11 , 12 , 13)
+Bottom dialog picker like telegram for all version of android (1 ... , 10 , 11 , 12 , 13)
 
 Search in Files
 
