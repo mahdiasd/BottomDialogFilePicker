@@ -2,7 +2,6 @@ package com.mahdiasd.sample
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -79,7 +78,6 @@ class MainActivity : AppCompatActivity() {
             .setActiveColor(Color.parseColor(activeColor))
             .setListener(object : FilePickerListener {
                 override fun selectedFiles(list: List<FileModel>?) {
-                    Log.e("TAG", "selectedFiles: ${list.toString()}")
                 }
             })
             .show()

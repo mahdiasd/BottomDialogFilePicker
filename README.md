@@ -3,15 +3,15 @@
 
 [![](https://jitpack.io/v/mahdiasd/BottomDialogFilePicker.svg)](https://jitpack.io/#mahdiasd/BottomDialogFilePicker)
 
-A android bottom dialog picker like telegram for all version of android
+A android bottom dialog picker like telegram for all version of android (1 ... , 10 , 11 , 12 , 13)
 
 Search in Files
 
-Support android 10+ 
+Support android 10+
 
 Expandable and scrollable dialog
 
-Full Customisable (Color / text / minimum and maximum selected file size / ...)
+Full Customisable (Color , text , minimum and maximum selected file size , ...)
 
 No required runtime permission
 
@@ -44,7 +44,7 @@ Add it in your root build.gradle at the end of repositories:
 
 ```bash
   dependencies {
-	        implementation 'com.github.mahdiasd:BottomDialogFilePicker:1.0.2'
+	        implementation 'com.github.mahdiasd:BottomDialogFilePicker:1.0.4'
 	}
 ```
 ## Ho To Use
@@ -116,8 +116,8 @@ Add it in your root build.gradle at the end of repositories:
 
 ## This library uses the following libraries
 
- - [Glide](https://github.com/bumptech/glide)
- - [Handle Path Oz](https://github.com/onimur/handle-path-oz)
+- [Glide](https://github.com/bumptech/glide)
+- [Handle Path Oz](https://github.com/onimur/handle-path-oz)
 
 Thanks to the very powerful Glide and Handle Path Oz
 

@@ -11,6 +11,10 @@
             type="com.mahdiasd.filepicker.FileModel" />
 
         <variable
+            name="deActiveColor"
+            type="Integer" />
+
+        <variable
             name="activeColor"
             type="Integer" />
 
@@ -114,14 +118,20 @@
                 android:text="@{`(` + subFolderCount + `)`}"
                 android:visibility="@{item.file.directory ? View.VISIBLE : View.GONE}" />
 
-            <com.google.android.material.checkbox.MaterialCheckBox
+
+            <ImageView
                 android:id="@+id/checkbox"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:checked="@{item.selected}"
+                android:layout_margin="4dp"
+                android:elevation="3dp"
                 android:onClick="@{(v) -> presenter.checkBox(v , item)}"
-                android:visibility="@{!item.file.directory ? View.VISIBLE : View.GONE}" />
+                android:src="@{item.selected ? @drawable/ic_done : @drawable/shape_circle}"
+                android:tint="@{item.selected ? activeColor : deActiveColor}"
+                android:visibility="@{!item.file.directory ? View.VISIBLE : View.GONE}"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </FrameLayout>
 
     </RelativeLayout>

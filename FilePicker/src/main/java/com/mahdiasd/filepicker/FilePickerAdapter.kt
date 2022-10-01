@@ -3,9 +3,7 @@ package com.mahdiasd.filepicker
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.net.Uri
-import android.util.Log.d
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
@@ -54,7 +52,7 @@ class FilePickerAdapter(
                     it.subFolderCount = model.file.listFiles()?.size ?: 0
                     it.stackListSize = stack.size
                     it.activeColor = config.activeColor
-                    it.checkbox.buttonTintList = ColorStateList.valueOf(config.activeColor)
+                    it.deActiveColor = config.deActiveColor
                 }
             }
             else -> {
@@ -63,9 +61,9 @@ class FilePickerAdapter(
                     it.item = model
                     glideSdCart(itemBinding.image, model.path)
                     it.presenter = this
+                    it.activeColor = config.activeColor
+                    it.deActiveColor = config.deActiveColor
                     it.type = config.selectedMode
-//                    it.checkbox.buttonTintList = ColorStateList.valueOf(config.activeColor)
-                    it.checkbox.setColorFilter(config.cardBackgroundColor)
                 }
             }
         }
@@ -186,7 +184,6 @@ class FilePickerAdapter(
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             context.startActivity(intent)
         } catch (e: java.lang.Exception) {
-            d("TAG", "openFile: ${e.message}")
             Toast.makeText(
                 context,
                 context.resources.getString(R.string.mahdiasd_file_picker_failed_open_file),
