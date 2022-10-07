@@ -18,6 +18,9 @@ No required runtime permission
 
 ## Screenshots
 
+<img src="https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/1.png" width="250" height="250" />
+
+
 ![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/1.png)
 ![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/2.png)
 ![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/3.png)
