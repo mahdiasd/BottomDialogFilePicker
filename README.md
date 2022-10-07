@@ -19,13 +19,10 @@ No required runtime permission
 ## Screenshots
 
 <img src="https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/1.png" width="200" height="450" />
-
-
-![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/1.png)
-![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/2.png)
-![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/3.png)
-![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/4.png)
-![App Screenshot](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/5.png)
+<img src="https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/2.png" width="200" height="450" />
+<img src="https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/3.png" width="200" height="450" />
+<img src="https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/4.png" width="200" height="450" />
+<img src="https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/5.png" width="200" height="450" />
 
 ## Installation
 
