@@ -139,3 +139,6 @@ Thanks to the very powerful Glide and Handle Path Oz
 # Uncomment for DexGuard only
 #-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 ```
+
+
+### Thank you for supporting the project and giving it a star 
