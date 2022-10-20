@@ -141,4 +141,4 @@ Thanks to the very powerful Glide and Handle Path Oz
 ```
 
 
-### Thank you for supporting the project and giving it a star 
+### | ~~~~ Thank you for supporting the project and giving it a star ~~~~ |
