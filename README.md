@@ -46,7 +46,7 @@ Add it in your root build.gradle at the end of repositories:
 
 ```bash
   dependencies {
-	        implementation 'com.github.mahdiasd:BottomDialogFilePicker:2.0.0'
+	        implementation 'com.github.mahdiasd:BottomDialogFilePicker:2.0.1'
 	}
 ```
 ## Ho To Use
@@ -118,7 +118,7 @@ Add it in your root build.gradle at the end of repositories:
 
 ```
 
-## Version 2.0.0 features:
+## Version 2 features:
 
 - Add camera to take picture
 - Fix show preview bug
