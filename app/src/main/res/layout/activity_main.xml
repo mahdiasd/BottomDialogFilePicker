@@ -14,14 +14,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="@dimen/sixteen"
             tools:context=".MainActivity">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="16dp"
+                android:padding="@dimen/sixteen"
                 android:text="Bottom Dialog File Picker"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/sixteen"
                 android:text="Dialog Modes:"
                 android:textColor="@color/black"
                 android:textSize="14sp"
@@ -40,7 +40,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/eight"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -80,13 +80,13 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/sixteen"
                 android:background="@color/colorAccent" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/sixteen"
                 android:text="Show When Click:"
                 android:textColor="@color/black"
                 android:textSize="14sp"
@@ -101,14 +101,14 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/sixteen"
                 android:background="@color/colorAccent" />
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/twenty_four"
                 android:text="Max Selection:"
                 android:textColor="@color/black"
                 android:textSize="14sp"
@@ -118,7 +118,7 @@
                 android:id="@+id/maxSelection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/eight"
                 android:hint="enter max number"
                 android:inputType="number"
                 android:textColor="@color/black"
@@ -128,13 +128,13 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/sixteen"
                 android:background="@color/colorAccent" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/twenty_four"
                 android:text="Active Color"
                 android:textColor="@color/black"
                 android:textSize="14sp"
@@ -144,7 +144,7 @@
                 android:id="@+id/color"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/eight"
                 android:hint="enter hex color like #E91E63"
                 android:textColor="@color/black"
                 android:textSize="14sp"
@@ -153,13 +153,13 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/sixteen"
                 android:background="@color/colorAccent" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/twenty_four"
                 android:text="DeActive Color"
                 android:textColor="@color/black"
                 android:textSize="14sp"
@@ -169,7 +169,7 @@
                 android:id="@+id/deActiveColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/eight"
                 android:hint="enter hex color like #E91E63"
                 android:textColor="@color/black"
                 android:textSize="14sp"
@@ -178,13 +178,13 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/sixteen"
                 android:background="@color/colorAccent" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/twenty_four"
                 android:text="Color Of CardView:"
                 android:textColor="@color/black"
                 android:textSize="14sp"
@@ -194,7 +194,7 @@
                 android:id="@+id/cardViewColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/eight"
                 android:hint="enter hex color like #E91E63"
                 android:textColor="@color/black"
                 android:textSize="14sp"
@@ -203,13 +203,13 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/sixteen"
                 android:background="@color/colorAccent" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/twenty_four"
                 android:text="Titles:"
                 android:textColor="@color/black"
                 android:textSize="14sp"
@@ -218,7 +218,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/eight"
                 android:gravity="center"
                 android:orientation="horizontal">
 

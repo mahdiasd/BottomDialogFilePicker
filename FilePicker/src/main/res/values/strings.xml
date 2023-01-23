@@ -5,8 +5,10 @@
     <string name="mahdiasd_file_picker_audio">Audio</string>
     <string name="mahdiasd_file_picker_file_manager">File Manager</string>
     <string name="mahdiasd_file_picker_image">Image</string>
+    <string name="mahdiasd_file_picker_camera">Camera</string>
     <string name="mahdiasd_file_picker_open_storage">Open Storage</string>
     <string name="mahdiasd_file_picker_max_total_size">Max size for total files is</string>
     <string name="mahdiasd_file_picker_max_each_size">Max size for each files is</string>
     <string name="mahdiasd_file_picker_search">Search…</string>
+    <string name="mahdiasd_file_picker_permission_denied_toast">Permission needed!</string>
 </resources>

@@ -21,7 +21,8 @@ class FilePickerAdapter(
     list: List<FileModel>?,
     private var selectedFiles: MutableList<FileModel>,
     private val pickerMode: PickerMode,
-    private val config: FilePicker
+    private val config: FilePicker,
+    private val filePickerFragment: FilePickerFragment? = null,
 ) : BaseRecyclerAdapter<FileModel>(context, list) {
 
     private var stack = ArrayDeque<List<FileModel?>?>()
@@ -32,7 +33,7 @@ class FilePickerAdapter(
     }
 
     override fun getRootLayoutId(): Int {
-        return if (pickerMode == PickerMode.Audio || pickerMode == PickerMode.FILE)
+        return if (pickerMode == PickerMode.Audio || pickerMode == PickerMode.File)
             R.layout.item_file_picker_manager
         else
             R.layout.item_file_picker
@@ -40,9 +41,8 @@ class FilePickerAdapter(
 
     override fun onBind(viewHolder: BaseViewHolder, position: Int) {
         val model = viewHolder.getData(position) as FileModel
-
         when (pickerMode) {
-            PickerMode.Audio, PickerMode.FILE -> {
+            PickerMode.Audio, PickerMode.File -> {
                 val itemBinding = viewHolder.binding as ItemFilePickerManagerBinding
                 itemBinding.let {
                     it.item = model
@@ -61,6 +61,7 @@ class FilePickerAdapter(
                     it.item = model
                     glideSdCart(itemBinding.image, model.path)
                     it.presenter = this
+                    it.containCamera = config.mode.contains(PickerMode.Camera)
                     it.activeColor = config.activeColor
                     it.deActiveColor = config.deActiveColor
                     it.type = config.selectedMode
@@ -118,7 +119,9 @@ class FilePickerAdapter(
     }
 
     fun onClick(view: View, fileModel: FileModel) {
-        if (config.showFileWhenClick)
+        if (fileModel.path == "Camera")
+            filePickerFragment?.openCamera()
+        else if (config.showFileWhenClick)
             openFile(fileModel.path)
         else
             checkBox(null, fileModel)
@@ -152,9 +155,6 @@ class FilePickerAdapter(
     private fun glideSdCart(view: ImageView, imageUrl: String?) {
         if (imageUrl == null) return
         val file = File(imageUrl)
-        if (!file.exists()) {
-            return
-        }
         val imageUri = Uri.fromFile(file) ?: return
         Glide.with(view.context)
             .load(imageUri)
@@ -172,14 +172,7 @@ class FilePickerAdapter(
             val ext = MimeTypeMap.getFileExtensionFromUrl(file.name)
             val type = map.getMimeTypeFromExtension(ext)
             val intent = Intent(Intent.ACTION_VIEW)
-            intent.setDataAndType(
-                FileProvider.getUriForFile(
-                    context,
-                    "com.mahdiasd.filepicker.provider",
-                    file
-                ),
-                type
-            )
+            intent.setDataAndType(FileProvider.getUriForFile(context, "${context.packageName}.provider", file), type)
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             context.startActivity(intent)

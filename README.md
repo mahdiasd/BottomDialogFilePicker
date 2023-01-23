@@ -5,6 +5,8 @@
 
 Bottom dialog picker like telegram for all version of android (1 ... , 10 , 11 , 12 , 13)
 
+Take picture with camera and save to storage
+
 Search in Files
 
 Support android 10+
@@ -44,7 +46,7 @@ Add it in your root build.gradle at the end of repositories:
 
 ```bash
   dependencies {
-	        implementation 'com.github.mahdiasd:BottomDialogFilePicker:1.0.5'
+	        implementation 'com.github.mahdiasd:BottomDialogFilePicker:2.0.0'
 	}
 ```
 ## Ho To Use
@@ -66,7 +68,7 @@ Add it in your root build.gradle at the end of repositories:
 
 ```
  FilePicker(context, supportFragmentManager)
-            .setMode(PickerMode.Audio, PickerMode.Video, PickerMode.FILE, PickerMode.Image)
+            .setMode(PickerMode.Audio, PickerMode.Video, PickerMode.FILE, PickerMode.Image, PickerMode.Camera)
             .setDefaultMode(PickerMode.Image)
             .setMaxSelection(5)
             .setMaxEachFileSize(1 * 1000) // mean -> 1 mb 
@@ -111,6 +113,9 @@ Add it in your root build.gradle at the end of repositories:
 <string name="mahdiasd_file_picker_max_each_size">Max size for each files is</string>
 
 <string name="mahdiasd_file_picker_search">Search…</string>
+
+    <string name="mahdiasd_file_picker_permission_denied_toast">Permission needed!</string>
+
 ```
 
 

@@ -45,7 +45,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp">
+        android:layout_margin="@dimen/four">
 
         <TextView
             android:id="@+id/back"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:onClick="@{presenter::back}"
-            android:padding="8dp"
+            android:padding="@dimen/eight"
             android:text="بازگشت >"
             android:textColor="?attr/colorPrimary"
             android:visibility="@{position == 0 &amp;&amp; stackListSize > 1 ? View.VISIBLE : View.GONE , default = gone}" />
@@ -61,9 +61,9 @@
         <ImageView
             android:id="@+id/separator"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="@dimen/two"
             android:layout_below="@id/back"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="@dimen/eight"
             android:layout_marginRight="150dp"
             android:layout_marginBottom="6dp"
             android:layerType="software"
@@ -86,18 +86,18 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/icon"
             android:layout_alignBottom="@id/icon"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="@dimen/eight"
+            android:layout_marginRight="@dimen/eight"
             android:layout_toLeftOf="@id/frameLayout"
             android:layout_toRightOf="@id/icon"
-            android:elevation="4dp"
+            android:elevation="@dimen/four"
             android:gravity="left|center"
             android:onClick="@{(v) -> presenter.nextFolder(v , item)}"
             android:singleLine="true"
             android:text="@{item.file.name}"
             android:textColor="@color/black"
-            app:autoSizeMaxTextSize="16dp"
-            app:autoSizeMinTextSize="8dp"
+            app:autoSizeMaxTextSize="@dimen/sixteen"
+            app:autoSizeMinTextSize="@dimen/eight"
             app:autoSizeTextType="uniform" />
 
         <FrameLayout
@@ -121,13 +121,13 @@
 
             <ImageView
                 android:id="@+id/checkbox"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/twenty_four"
+                android:layout_height="@dimen/twenty_four"
                 android:layout_gravity="center"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/four"
                 android:background="@drawable/shape_circle"
                 android:backgroundTint="@{item.selected ? activeColor : @color/white}"
-                android:elevation="3dp"
+                android:elevation="@dimen/three"
                 android:onClick="@{(v) -> presenter.checkBox(v , item)}"
                 android:src="@drawable/checkmark"
                 android:tint="@color/white"

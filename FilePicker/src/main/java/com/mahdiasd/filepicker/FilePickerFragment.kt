@@ -6,8 +6,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +31,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mahdiasd.filepicker.databinding.FilePickerFragmentBinding
 import kotlinx.coroutines.FlowPreview
 import java.io.File
+import java.io.FileOutputStream
 
 
 class FilePickerFragment : BottomSheetDialogFragment() {
@@ -59,12 +62,27 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         binding.presenter = this
         binding.config = config
 
-        if (config.mode.size == 1 && config.selectedMode == PickerMode.FILE)
+        if (config.mode.size == 1 && config.selectedMode == PickerMode.File)
             openFileManager()
         else
             initSectionList()
 
         return binding.root
+    }
+
+    private fun checkPermission() {
+        if (isGrant(Manifest.permission.READ_EXTERNAL_STORAGE)) getFiles()
+
+        val list = arrayListOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (config.mode.contains(PickerMode.Camera)) {
+            list.add(Manifest.permission.CAMERA)
+            list.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+        requestMultiplePermissions.launch(list.toTypedArray())
+    }
+
+    private fun isGrant(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
     }
 
     fun setConfig(filePicker: FilePicker) {
@@ -86,17 +104,27 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         )
 
         binding.sectionList.let {
-            it.layoutManager =
-                (LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false))
+            it.layoutManager = (LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false))
             it.adapter = sectionAdapter
         }
 
         sectionAdapter.changeMode.observe(this) {
             config.selectedMode = it
             initRecyclerView()
-
+            if (it == PickerMode.Camera) {
+                openCamera()
+            }
         }
 
+    }
+
+    fun openCamera() {
+        if (!isGrant(Manifest.permission.CAMERA) || !isGrant(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            checkPermission()
+        else {
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            cameraLauncher.launch(cameraIntent)
+        }
     }
 
     private fun openFileManager() {
@@ -105,7 +133,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
             .setType("*/*")
             .setAction(Intent.ACTION_OPEN_DOCUMENT)
             .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, config.maxSelection > 1)
-        resultLauncher.launch(intent)
+        storageLauncher.launch(intent)
 
         handlePathOz =
             HandlePathOz(requireContext(), object : HandlePathOzListener.MultipleUri {
@@ -118,7 +146,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                                 fileModel.selected = true
                                 selectedFiles.add(fileModel)
                             }
-                        }else{
+                        } else {
                             Toast.makeText(requireContext(), getString(R.string.mahdiasd_file_picker_cant_find_this_file), Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -126,7 +154,6 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                 }
             })
     }
-
 
     private fun checkMaxSize(file: FileModel): Boolean {
         val fileSize = (file.file.length() / 1024).toInt()
@@ -155,37 +182,72 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         }
     }
 
-
-    @OptIn(FlowPreview::class)
-    private var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            storageIsOpen = false
-            if (result.resultCode == Activity.RESULT_OK) {
-                storageIsOpen = false
-                result.data?.clipData?.also {
-                    val a: MutableList<Uri> = ArrayList()
-                    for (i in 0 until it.itemCount) {
-                        a.add(it.getItemAt(i).uri)
+    private var cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            initRecyclerView()
+            result.data?.extras?.get("data")?.let {
+                val imageBitmap = it as Bitmap?
+                val file = saveBitmapToStorage(imageBitmap)
+                getImage()
+                if (file != null && file.exists()) {
+                    val fileModel = FileModel(file.path)
+                    if (checkMaxSize(fileModel) && selectedFiles.size < config.maxSelection) {
+                        fileModel.selected = true
+                        selectedFiles.add(fileModel)
+                        initRecyclerView()
                     }
-                    handlePathOz?.getListRealPath(a)
-                }
-
-                result.data?.data?.also {
-                    handlePathOz?.getListRealPath(arrayListOf(it))
+                } else {
+                    Toast.makeText(requireContext(), getString(R.string.mahdiasd_file_picker_cant_find_this_file), Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+
+    private fun saveBitmapToStorage(bitmap: Bitmap?): File? {
+        if (bitmap == null) return null
+        val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path + File.separator + System.currentTimeMillis() + ".png"
+        val file = File(imagesDir)
+        return try {
+            val fos = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos)
+            fos.close()
+            if (file.exists()) file
+            else null
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+
+    @OptIn(FlowPreview::class)
+    private var storageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        storageIsOpen = false
+        if (result.resultCode == Activity.RESULT_OK) {
+            storageIsOpen = false
+            result.data?.clipData?.also {
+                val a: MutableList<Uri> = ArrayList()
+                for (i in 0 until it.itemCount) {
+                    a.add(it.getItemAt(i).uri)
+                }
+                handlePathOz?.getListRealPath(a)
+            }
+
+            result.data?.data?.also {
+                handlePathOz?.getListRealPath(arrayListOf(it))
+            }
+        }
+    }
 
     private fun getSectionList(): MutableList<SectionModel> {
         val temp: MutableList<SectionModel> = ArrayList()
         config.mode.forEach {
             when (it) {
-                PickerMode.FILE -> {
+                PickerMode.File -> {
                     temp.add(
                         SectionModel(
                             config.fileManagerText,
                             config.fileManagerIcon,
-                            PickerMode.FILE
+                            PickerMode.File
                         )
                     )
                 }
@@ -216,27 +278,19 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                         )
                     )
                 }
+                else -> {}
             }
         }
         temp.find { it.mode == config.selectedMode }?.selected = true
         return temp
     }
 
-    private fun checkPermission() {
-        val hasPermission =
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_CONTACTS)
-
-        if (hasPermission != PackageManager.PERMISSION_GRANTED) {
-            requestMultiplePermissions.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
-        }
-    }
-
     private val requestMultiplePermissions =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            if (permissions.entries.all { it.value == true }) {
+            if (permissions.entries.all { it.value }) {
                 getFiles()
             } else {
-                Toast.makeText(requireContext(), "permission needed!!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.mahdiasd_file_picker_permission_denied_toast, Toast.LENGTH_SHORT).show()
                 dismiss()
             }
         }
@@ -258,6 +312,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     }
 
     private fun getImage() {
+        imageList.clear()
         val columns = arrayOf(MediaStore.Images.Media.DATA, MediaStore.Images.Media._ID)
 
         val orderBy = MediaStore.Images.Media.DATE_ADDED + " DESC"
@@ -274,6 +329,11 @@ class FilePickerFragment : BottomSheetDialogFragment() {
             val dataColumnIndex: Int = cursor.getColumnIndex(MediaStore.Images.Media.DATA)
             imageList.add(FileModel(cursor.getString(dataColumnIndex)))
         }
+
+        if (config.mode.contains(PickerMode.Camera)) {
+            imageList.takeIf { it.find { it.path == "Camera" } == null }?.let { imageList.add(0, FileModel("Camera")) }
+        }
+
         cursor.close()
     }
 
@@ -324,16 +384,19 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         binding.loading = false
 
         var temp = getSelectedList()
-        if (binding.edt.text.toString().isNotEmpty() && config.selectedMode != PickerMode.FILE)
+        if (binding.edt.text.toString().isNotEmpty() && config.selectedMode != PickerMode.File)
             temp = temp.filter {
-                it.file.name.contains(
-                    binding.edt.text.toString(),
-                    false
-                )
+                it.file.name.contains(binding.edt.text.toString(), false)
             } as MutableList<FileModel>
 
+        if (selectedFiles.isEmpty())
+            temp.onEach { it.selected = false }
+        else
+            selectedFiles.forEach {
+                temp.find { t -> t.path == it.path }?.let { te -> te.selected = true }
+            }
 
-        myAdapter = FilePickerAdapter(context, temp, selectedFiles, config.selectedMode, config)
+        myAdapter = FilePickerAdapter(context, temp, selectedFiles, config.selectedMode, config, this)
 
         binding.list.let {
             it.layoutManager = handleLayoutManager()
@@ -353,7 +416,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
 
     private fun handleLayoutManager(): RecyclerView.LayoutManager {
         return when (config.selectedMode) {
-            PickerMode.Audio, PickerMode.FILE ->
+            PickerMode.Audio, PickerMode.File ->
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
             else -> {
@@ -395,9 +458,11 @@ class FilePickerFragment : BottomSheetDialogFragment() {
 
             behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    bottomSheet.setBackgroundResource(android.R.color.transparent)
                 }
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                    bottomSheet.setBackgroundResource(android.R.color.transparent)
                     binding.footer.y =
                         ((bottomSheet.parent as View).height - bottomSheet.top - binding.footer.height).toFloat()
                     binding.done.y =
@@ -405,8 +470,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                     binding.countFrame.y =
                         (((bottomSheet.parent as View).height - bottomSheet.top - binding.done.height).toFloat() - binding.footer.height / 1.9).toFloat()
 
-                    binding.countFrame.visibility =
-                        if (selectedFiles.size == 0) View.GONE else View.VISIBLE
+                    binding.countFrame.visibility = if (selectedFiles.size == 0) View.GONE else View.VISIBLE
                     binding.count.text = selectedFiles.size.toString()
                 }
             }.apply {
@@ -424,7 +488,6 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     fun search(s: CharSequence, start: Int, before: Int, count: Int) {
         initRecyclerView()
     }
-
 
     fun btn(view: View?) {
         config.listener?.selectedFiles(selectedFiles)

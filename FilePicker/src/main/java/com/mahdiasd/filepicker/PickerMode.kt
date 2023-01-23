@@ -4,5 +4,6 @@ enum class PickerMode {
     Video,
     Image,
     Audio,
-    FILE,
+    File,
+    Camera,
 }

@@ -47,10 +47,10 @@
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="60dp"
-                android:layout_height="3dp"
+                android:layout_height="@dimen/three"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginBottom="@dimen/eight"
                 android:background="@drawable/shape_radius_35"
                 android:backgroundTint="@color/black"
                 android:elevation="5dp" />
@@ -59,26 +59,27 @@
             <EditText
                 android:id="@+id/edt"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="@dimen/forty_five"
                 android:layout_below="@id/image"
                 android:background="@drawable/shape_radius_20"
+                android:backgroundTint="@{config.cardBackgroundColor}"
                 android:hint="@string/mahdiasd_file_picker_search"
                 android:onTextChanged="@{presenter::search}"
-                android:paddingLeft="16dp"
+                android:paddingLeft="@dimen/sixteen"
                 android:paddingRight="38dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
-                android:visibility="@{config.selectedMode != PickerMode.FILE ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{config.selectedMode != PickerMode.File ? View.VISIBLE : View.GONE}" />
 
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="@dimen/eighteen"
+                android:layout_height="@dimen/eighteen"
                 android:layout_alignTop="@id/edt"
                 android:layout_alignRight="@id/edt"
                 android:layout_alignBottom="@id/edt"
-                android:layout_marginRight="12dp"
-                android:src="@drawable/ic_search"
-                android:visibility="@{config.selectedMode != PickerMode.FILE ? View.VISIBLE : View.GONE}" />
+                android:layout_marginRight="@dimen/twelve"
+                android:src="@{config.searchIcon}"
+                android:visibility="@{config.selectedMode != PickerMode.File ? View.VISIBLE : View.GONE}" />
 
             <TextView
                 android:id="@+id/selectedItemFromSdCard"
@@ -86,20 +87,20 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/edt"
                 android:layout_alignParentLeft="true"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginStart="@dimen/four"
+                android:layout_marginTop="@dimen/four"
+                android:layout_marginEnd="@dimen/four"
+                android:layout_marginBottom="@dimen/four"
                 android:background="@{config.activeColor}"
-                android:elevation="2dp"
+                android:elevation="@dimen/two"
                 android:gravity="center"
                 android:onClick="@{presenter::openStorage}"
-                android:padding="8dp"
+                android:padding="@dimen/eight"
                 android:text="@{config.openStorageText}"
                 android:textColor="@color/white"
-                android:textSize="12dp"
+                android:textSize="@dimen/twelve"
                 android:textStyle="bold"
-                android:visibility="@{config.selectedMode == PickerMode.FILE ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{config.selectedMode == PickerMode.File ? View.VISIBLE : View.GONE}" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -108,11 +109,11 @@
                 android:layout_height="match_parent"
                 android:layout_above="@id/footer"
                 android:layout_below="@id/selectedItemFromSdCard"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="@dimen/eight"
                 android:clipToPadding="false"
-                android:minHeight="350dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:minHeight="@dimen/three_hundred_and_fifty"
+                android:paddingTop="@dimen/sixteen"
+                android:paddingBottom="@dimen/sixteen"
                 android:visibility="visible" />
 
 
@@ -122,10 +123,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:background="@{config.cardBackgroundColor}"
-                android:elevation="2dp"
+                android:elevation="@dimen/two"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="@dimen/twelve">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/sectionList"
@@ -135,22 +136,21 @@
 
             </LinearLayout>
 
-
             <ImageView
                 android:id="@+id/done"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/forty_eight"
+                android:layout_height="@dimen/forty_eight"
                 android:layout_above="@id/footer"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="-24dp"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginRight="@dimen/sixteen"
+                android:layout_marginBottom="-28dp"
                 android:background="@drawable/shape_circle"
                 android:backgroundTint="@{config.activeColor}"
-                android:elevation="2dp"
+                android:elevation="@dimen/two"
                 android:onClick="@{presenter::btn}"
-                android:padding="10dp"
-                android:src="@drawable/ic_send"
+                android:padding="@dimen/ten"
+                android:src="@{config.doneIcon}"
                 android:tint="@color/white" />
 
             <FrameLayout
@@ -163,14 +163,14 @@
                 android:layout_marginBottom="-15dp"
                 android:background="@drawable/shape_circle"
                 android:backgroundTint="@{config.cardBackgroundColor}"
-                android:elevation="2dp"
-                android:padding="3dp"
+                android:elevation="@dimen/two"
+                android:padding="@dimen/three"
                 android:visibility="visible">
 
                 <TextView
                     android:id="@+id/count"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/twenty_four"
+                    android:layout_height="@dimen/twenty_four"
                     android:background="@drawable/shape_circle"
                     android:backgroundTint="@{config.activeColor}"
                     android:gravity="center"
@@ -179,8 +179,8 @@
             </FrameLayout>
 
             <ProgressBar
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="@dimen/forty_five"
+                android:layout_height="@dimen/forty_five"
                 android:layout_centerInParent="true"
                 android:visibility="@{loading ? View.VISIBLE : View.GONE , default = gone}" />
 

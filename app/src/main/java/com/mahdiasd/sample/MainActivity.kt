@@ -30,14 +30,14 @@ class MainActivity : AppCompatActivity() {
 
     fun btn(view: View) {
         val modes =
-            mutableListOf(PickerMode.FILE, PickerMode.Audio, PickerMode.Image, PickerMode.Video)
+            mutableListOf(PickerMode.File, PickerMode.Audio, PickerMode.Image, PickerMode.Video, PickerMode.Camera)
 
         if (!binding.Image.isChecked)
             modes.remove(PickerMode.Image)
         if (!binding.video.isChecked)
             modes.remove(PickerMode.Video)
         if (!binding.storage.isChecked)
-            modes.remove(PickerMode.FILE)
+            modes.remove(PickerMode.File)
         if (!binding.audio.isChecked)
             modes.remove(PickerMode.Audio)
 
@@ -65,13 +65,14 @@ class MainActivity : AppCompatActivity() {
         FilePicker(this, supportFragmentManager)
             .setMode(*modes.toTypedArray())
             .setDefaultMode(PickerMode.Image)
-            .setMaxSelection(max).setCardBackgroundColor(Color.parseColor(cardBackgroundColor))
+            .setMaxSelection(max)
+            .setCardBackgroundColor(Color.parseColor(cardBackgroundColor))
             .setCustomText(
-                binding.videoTitle.text.toString(),
-                binding.audioTitle.text.toString(),
-                binding.storage.text.toString(),
-                binding.imageTitle.text.toString(),
-                binding.openStorageTitle.text.toString()
+                videoText = binding.videoTitle.text.toString(),
+                audioText = binding.audioTitle.text.toString(),
+                fileManagerText = binding.storage.text.toString(),
+                imageText = binding.imageTitle.text.toString(),
+                openStorageText = binding.openStorageTitle.text.toString()
             )
             .setShowFileWhenClick(binding.showWhenClick.isChecked)
             .setDeActiveColor(Color.parseColor(deActiveColor))

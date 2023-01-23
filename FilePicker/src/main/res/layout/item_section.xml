@@ -19,24 +19,24 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="@dimen/eight"
+        android:layout_marginRight="@dimen/eight"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/forty_eight"
+            android:layout_height="@dimen/forty_eight"
             android:background="@drawable/shape_circle"
             android:backgroundTint="@{item.selected ? activeColor: deActiveColor}"
-            android:padding="12dp"
+            android:padding="@dimen/twelve"
             android:src="@{item.icon}"
             android:tint="@color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/four"
             android:text="@{item.text}"
             android:textColor="@{item.selected ? activeColor : deActiveColor}"
             android:textSize="14sp" />

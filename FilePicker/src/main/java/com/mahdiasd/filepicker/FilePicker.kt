@@ -12,13 +12,14 @@ data class FilePicker(
     private val fragmentManager: FragmentManager,
     var listener: FilePickerListener? = null,
 
-    var mode: List<PickerMode> = listOf(PickerMode.Image, PickerMode.Video, PickerMode.Audio),
+    var mode: List<PickerMode> = listOf(PickerMode.Image, PickerMode.Image, PickerMode.Video, PickerMode.Audio),
     private var defaultMode: PickerMode? = null,
 
     var videoText: String = context.getString(R.string.mahdiasd_file_picker_video),
     var audioText: String = context.getString(R.string.mahdiasd_file_picker_audio),
     var fileManagerText: String = context.getString(R.string.mahdiasd_file_picker_file_manager),
     var imageText: String = context.getString(R.string.mahdiasd_file_picker_image),
+    var cameraText: String = context.getString(R.string.mahdiasd_file_picker_camera),
     var openStorageText: String = context.getString(R.string.mahdiasd_file_picker_open_storage),
     var maxTotalFileSizeText: String = context.getString(R.string.mahdiasd_file_picker_max_total_size),
     var maxEachFileSizeText: String = context.getString(R.string.mahdiasd_file_picker_max_each_size),
@@ -28,6 +29,8 @@ data class FilePicker(
     var documentIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_document),
     var fileManagerIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_file),
     var imageIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_image),
+    var searchIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_search),
+    var doneIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_send),
 
     var showFileWhenClick: Boolean = false,
     var maxSelection: Int = 10,
@@ -38,7 +41,9 @@ data class FilePicker(
     var activeColor: Int = ContextCompat.getColor(context, R.color.colorPrimary),
     var deActiveColor: Int = ContextCompat.getColor(context, R.color.gray),
     var cardBackgroundColor: Int = ContextCompat.getColor(context, R.color.white),
-) :
+
+
+    ) :
     BaseObservable() {
     private val fragmentTag = "mahdiasd_file_picker"
     private var filePickerFragment = FilePickerFragment.newInstance()
@@ -62,12 +67,17 @@ data class FilePicker(
         documentIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_document),
         fileManagerIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_file),
         imageIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_image),
+        doneIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_send),
+        searchIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_search),
     ): FilePicker {
-        this.videoIcon
-        this.audioIcon
-        this.documentIcon
-        this.fileManagerIcon
-        this.imageIcon
+        this.searchIcon = searchIcon
+        this.videoIcon = videoIcon
+        this.audioIcon = audioIcon
+        this.documentIcon = documentIcon
+        this.fileManagerIcon = fileManagerIcon
+        this.imageIcon = imageIcon
+        this.doneIcon = doneIcon
+
         return this
     }
 
@@ -141,6 +151,7 @@ data class FilePicker(
         audioText: String = context.getString(R.string.mahdiasd_file_picker_audio),
         fileManagerText: String = context.getString(R.string.mahdiasd_file_picker_file_manager),
         imageText: String = context.getString(R.string.mahdiasd_file_picker_image),
+        cameraText: String = context.getString(R.string.mahdiasd_file_picker_camera),
         openStorageText: String = context.getString(R.string.mahdiasd_file_picker_open_storage),
         maxTotalFileSizeText: String = context.getString(R.string.mahdiasd_file_picker_max_total_size),
         maxEachFileSizeText: String = context.getString(R.string.mahdiasd_file_picker_max_each_size),
@@ -149,6 +160,7 @@ data class FilePicker(
         this.audioText = audioText
         this.fileManagerText = fileManagerText
         this.imageText = imageText
+        this.cameraText = cameraText
         this.openStorageText = openStorageText
         this.maxTotalFileSizeText = maxTotalFileSizeText
         this.maxEachFileSizeText = maxEachFileSizeText

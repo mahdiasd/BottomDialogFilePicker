@@ -9,6 +9,10 @@
             type="Integer" />
 
         <variable
+            name="containCamera"
+            type="Boolean" />
+
+        <variable
             name="deActiveColor"
             type="Integer" />
 
@@ -36,7 +40,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp">
+        android:layout_margin="@dimen/four">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image"
@@ -53,41 +57,42 @@
             app:shapeAppearanceOverlay="@style/imageViewRadius" />
 
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/forty_eight"
+            android:layout_height="@dimen/forty_eight"
             android:layout_centerInParent="true"
-            android:elevation="3dp"
+            android:elevation="@dimen/three"
             android:onClick="@{(v) -> presenter.onClick(v , item)}"
-            android:src="@drawable/ic_play"
+            android:src="@{type == PickerMode.Video ? @drawable/ic_play : @drawable/ic_camera}"
             android:tint="@color/white"
-            android:visibility="@{type == PickerMode.Video ? View.VISIBLE : View.GONE , default = gone}"
+            android:visibility="@{type == PickerMode.Video ? View.VISIBLE : (type == PickerMode.Image &amp;&amp; containCamera &amp;&amp; item.path == `Camera`) ? View.VISIBLE : View.GONE , default = gone}"
             app:layout_constraintBottom_toBottomOf="@id/image"
             app:layout_constraintLeft_toLeftOf="@id/image"
             app:layout_constraintRight_toRightOf="@id/image"
             app:layout_constraintTop_toTopOf="@id/image" />
 
-        <View
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:background="@drawable/shape_circle"
-            android:backgroundTint="@color/white"
-            android:elevation="2dp"
-            app:layout_constraintBottom_toBottomOf="@id/checkbox"
-            app:layout_constraintLeft_toLeftOf="@id/checkbox"
-            app:layout_constraintRight_toRightOf="@id/checkbox"
-            app:layout_constraintTop_toTopOf="@id/checkbox" />
+        <!--        <View-->
+        <!--            android:layout_width="@dimen/sixteen"-->
+        <!--            android:layout_height="@dimen/sixteen"-->
+        <!--            android:background="@drawable/shape_circle"-->
+        <!--            android:backgroundTint="@color/white"-->
+        <!--            android:elevation="@dimen/two"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/checkbox"-->
+        <!--            app:layout_constraintLeft_toLeftOf="@id/checkbox"-->
+        <!--            app:layout_constraintRight_toRightOf="@id/checkbox"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/checkbox" />-->
 
         <ImageView
             android:id="@+id/checkbox"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="4dp"
+            android:layout_width="@dimen/twenty_four"
+            android:layout_height="@dimen/twenty_four"
+            android:layout_margin="@dimen/four"
             android:background="@drawable/shape_circle"
             android:backgroundTint="@{item.selected ? activeColor : @color/white}"
             android:elevation="5dp"
             android:onClick="@{(v) -> presenter.checkBox(v , item)}"
             android:src="@drawable/checkmark"
             android:tint="@color/white"
+            android:visibility="@{(type== PickerMode.Image &amp;&amp; containCamera &amp;&amp; item.path == `Camera`) ? View.GONE : View.VISIBLE , default = visible}"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
