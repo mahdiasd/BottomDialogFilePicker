@@ -24,13 +24,13 @@ data class FilePicker(
     var maxTotalFileSizeText: String = context.getString(R.string.mahdiasd_file_picker_max_total_size),
     var maxEachFileSizeText: String = context.getString(R.string.mahdiasd_file_picker_max_each_size),
 
-    var videoIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_video),
-    var audioIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_audio),
-    var documentIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_document),
-    var fileManagerIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_file),
-    var imageIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_image),
-    var searchIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_search),
-    var doneIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_send),
+    var videoIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_video),
+    var audioIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_audio),
+    var documentIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_document),
+    var fileManagerIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_file),
+    var imageIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_image),
+    var searchIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_search),
+    var doneIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_send),
 
     var showFileWhenClick: Boolean = false,
     var maxSelection: Int = 10,
@@ -62,13 +62,13 @@ data class FilePicker(
     }
 
     fun setIcons(
-        videoIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_video),
-        audioIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_audio),
-        documentIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_document),
-        fileManagerIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_file),
-        imageIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_image),
-        doneIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_send),
-        searchIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_search),
+        videoIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_video),
+        audioIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_audio),
+        documentIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_document),
+        fileManagerIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_file),
+        imageIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_image),
+        doneIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_send),
+        searchIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.mahdiasd_ic_search),
     ): FilePicker {
         this.searchIcon = searchIcon
         this.videoIcon = videoIcon

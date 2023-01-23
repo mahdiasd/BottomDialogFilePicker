@@ -27,7 +27,7 @@
         <ImageView
             android:layout_width="@dimen/forty_eight"
             android:layout_height="@dimen/forty_eight"
-            android:background="@drawable/shape_circle"
+            android:background="@drawable/mahdiasd_shape_circle"
             android:backgroundTint="@{item.selected ? activeColor: deActiveColor}"
             android:padding="@dimen/twelve"
             android:src="@{item.icon}"

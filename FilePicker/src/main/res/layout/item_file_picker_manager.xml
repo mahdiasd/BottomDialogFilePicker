@@ -67,7 +67,7 @@
             android:layout_marginRight="150dp"
             android:layout_marginBottom="6dp"
             android:layerType="software"
-            android:src="@drawable/dash_line"
+            android:src="@drawable/mahdiasd_dash_line"
             android:visibility="@{position == 0 &amp;&amp; stackListSize > 1 ? View.VISIBLE : View.GONE , default = gone}" />
 
         <ImageView
@@ -77,7 +77,7 @@
             android:layout_below="@id/separator"
             android:onClick="@{(v) -> presenter.nextFolder(v , item)}"
             android:padding="6dp"
-            android:src="@{pickerMode == PickerMode.Audio ? @drawable/ic_audio : @drawable/ic_document}"
+            android:src="@{pickerMode == PickerMode.Audio ? @drawable/mahdiasd_ic_audio : @drawable/mahdiasd_ic_document}"
             android:tint="@color/colorPrimary" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -125,11 +125,11 @@
                 android:layout_height="@dimen/twenty_four"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/four"
-                android:background="@drawable/shape_circle"
+                android:background="@drawable/mahdiasd_shape_circle"
                 android:backgroundTint="@{item.selected ? activeColor : @color/white}"
                 android:elevation="@dimen/three"
                 android:onClick="@{(v) -> presenter.checkBox(v , item)}"
-                android:src="@drawable/checkmark"
+                android:src="@drawable/mahdiasd_ic_checkmark"
                 android:tint="@color/white"
                 android:visibility="@{!item.file.directory ? View.VISIBLE : View.GONE}"
                 app:layout_constraintRight_toRightOf="parent"
