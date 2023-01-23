@@ -55,7 +55,7 @@ Add it in your root build.gradle at the end of repositories:
 
 ```
  FilePicker(this, supportFragmentManager)
-            .setMode(PickerMode.Image, PickerMode.Audio, PickerMode.FILE, PickerMode.Video)
+            .setMode(PickerMode.Image, PickerMode.Audio, PickerMode.File, PickerMode.Video)
             .setListener(object : FilePickerListener {
                 override fun selectedFiles(list: List<FileModel>?) {
                     // your code...
@@ -68,7 +68,7 @@ Add it in your root build.gradle at the end of repositories:
 
 ```
  FilePicker(context, supportFragmentManager)
-            .setMode(PickerMode.Audio, PickerMode.Video, PickerMode.FILE, PickerMode.Image, PickerMode.Camera)
+            .setMode(PickerMode.Audio, PickerMode.Video, PickerMode.File, PickerMode.Image, PickerMode.Camera)
             .setDefaultMode(PickerMode.Image)
             .setMaxSelection(5)
             .setMaxEachFileSize(1 * 1000) // mean -> 1 mb 
