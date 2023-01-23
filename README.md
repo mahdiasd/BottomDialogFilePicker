@@ -46,7 +46,7 @@ Add it in your root build.gradle at the end of repositories:
 
 ```bash
   dependencies {
-	        implementation 'com.github.mahdiasd:BottomDialogFilePicker:2.0.1'
+	        implementation 'com.github.mahdiasd:BottomDialogFilePicker:2.0.2'
 	}
 ```
 ## Ho To Use
@@ -114,7 +114,7 @@ Add it in your root build.gradle at the end of repositories:
 
 <string name="mahdiasd_file_picker_search">Search…</string>
 
-    <string name="mahdiasd_file_picker_permission_denied_toast">Permission needed!</string>
+<string name="mahdiasd_file_picker_permission_denied_toast">Permission needed!</string>
 
 ```
 

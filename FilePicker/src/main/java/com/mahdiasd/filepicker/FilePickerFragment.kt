@@ -8,6 +8,7 @@ import android.content.res.Configuration
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -17,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,7 +50,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
 
     private lateinit var config: FilePicker
     private var storageIsOpen = false
-
+    private var cameraImagePath = ""
     companion object {
         fun newInstance() = FilePickerFragment()
     }
@@ -118,11 +120,25 @@ class FilePickerFragment : BottomSheetDialogFragment() {
 
     }
 
+    private fun getUriFromFile(file: File?): Uri? {
+        if (file == null) return null
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.provider", file)
+        else
+            Uri.fromFile(file)
+    }
+
+
     fun openCamera() {
         if (!isGrant(Manifest.permission.CAMERA) || !isGrant(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             checkPermission()
         else {
+            cameraImagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path + File.separator + System.currentTimeMillis() + ".png"
+            val file = File(cameraImagePath)
+            file.createNewFile()
+            val outputFileUri = getUriFromFile(file)
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
             cameraLauncher.launch(cameraIntent)
         }
     }
@@ -186,11 +202,11 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         if (result.resultCode == Activity.RESULT_OK) {
             initRecyclerView()
             result.data?.extras?.get("data")?.let {
-                val imageBitmap = it as Bitmap?
-                val file = saveBitmapToStorage(imageBitmap)
+//                val imageBitmap = it as Bitmap?
+//                val file = saveBitmapToStorage(imageBitmap)
                 getImage()
-                if (file != null && file.exists()) {
-                    val fileModel = FileModel(file.path)
+                if (File(cameraImagePath).exists()) {
+                    val fileModel = FileModel(cameraImagePath)
                     if (checkMaxSize(fileModel) && selectedFiles.size < config.maxSelection) {
                         fileModel.selected = true
                         selectedFiles.add(fileModel)
@@ -209,7 +225,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         val file = File(imagesDir)
         return try {
             val fos = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
             fos.close()
             if (file.exists()) file
             else null
