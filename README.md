@@ -118,6 +118,14 @@ Add it in your root build.gradle at the end of repositories:
 
 ```
 
+## Version 2.0.0 feautres:
+
+- Add camera to take picture
+- Fix show preview bug
+- Add search icon to replace with default
+- Add done icon to replace with default 
+- Fix card background color bug
+
 
 ## This library uses the following libraries
 
