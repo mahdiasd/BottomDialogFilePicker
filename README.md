@@ -118,7 +118,7 @@ Add it in your root build.gradle at the end of repositories:
 
 ```
 
-## Version 2.0.0 feautres:
+## Version 2.0.0 features:
 
 - Add camera to take picture
 - Fix show preview bug
