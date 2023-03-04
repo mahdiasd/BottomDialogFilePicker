@@ -71,8 +71,8 @@ Add it in your root build.gradle at the end of repositories:
             .setMode(PickerMode.Audio, PickerMode.Video, PickerMode.File, PickerMode.Image, PickerMode.Camera)
             .setDefaultMode(PickerMode.Image)
             .setMaxSelection(5)
-            .setMaxEachFileSize(1 * 1000) // mean -> 1 mb 
-            .setMaxTotalFileSize(15 * 1000) // mean -> 15 mb
+            .setMaxEachFileSize(1 * 1024) // mean -> 1 mb 
+            .setMaxTotalFileSize(15 * 1024) // mean -> 15 mb
             .setCustomText("video", "audio", "storage", "image", "openStorage")
             .setShowFileWhenClick(true)
             .setCardBackgroundColor(ContextCompat.getColor(context, R.color.white))
