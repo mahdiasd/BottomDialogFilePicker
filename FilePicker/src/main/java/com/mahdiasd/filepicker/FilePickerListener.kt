@@ -1,6 +1,8 @@
 package com.mahdiasd.filepicker
 
+import android.net.Uri
+
 
 interface FilePickerListener {
-    fun selectedFiles(list: List<FileModel>?)
+    fun selectedFiles(files: List<FileModel>?, uris: List<Uri>?)
 }

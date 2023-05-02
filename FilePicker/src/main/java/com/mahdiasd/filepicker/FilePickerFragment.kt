@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.database.Cursor
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -33,7 +32,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mahdiasd.filepicker.databinding.FilePickerFragmentBinding
 import kotlinx.coroutines.FlowPreview
 import java.io.File
-import java.io.FileOutputStream
 
 
 class FilePickerFragment : BottomSheetDialogFragment() {
@@ -51,6 +49,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     private lateinit var config: FilePicker
     private var storageIsOpen = false
     private var cameraImagePath = ""
+
     companion object {
         fun newInstance() = FilePickerFragment()
     }
@@ -68,6 +67,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
             openFileManager()
         else
             initSectionList()
+
 
         return binding.root
     }
@@ -147,7 +147,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         storageIsOpen = true
         val intent = Intent()
             .setType("*/*")
-            .setAction(Intent.ACTION_OPEN_DOCUMENT)
+            .setAction(Intent.ACTION_GET_CONTENT)
             .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, config.maxSelection > 1)
         storageLauncher.launch(intent)
 
@@ -216,21 +216,6 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                     Toast.makeText(requireContext(), getString(R.string.mahdiasd_file_picker_cant_find_this_file), Toast.LENGTH_SHORT).show()
                 }
             }
-        }
-    }
-
-    private fun saveBitmapToStorage(bitmap: Bitmap?): File? {
-        if (bitmap == null) return null
-        val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path + File.separator + System.currentTimeMillis() + ".png"
-        val file = File(imagesDir)
-        return try {
-            val fos = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
-            fos.close()
-            if (file.exists()) file
-            else null
-        } catch (e: Exception) {
-            null
         }
     }
 
@@ -506,7 +491,11 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     }
 
     fun btn(view: View?) {
-        config.listener?.selectedFiles(selectedFiles)
+        val uris: MutableList<Uri> = ArrayList()
+        selectedFiles.forEach {
+            getUriFromFile(it.file)?.let { it1 -> uris.add(it1) }
+        }
+        config.listener?.selectedFiles(selectedFiles, uris)
         selectedFiles.clear()
         dismiss()
     }

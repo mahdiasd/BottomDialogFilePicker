@@ -1,6 +1,7 @@
 package com.mahdiasd.sample
 
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -78,7 +79,8 @@ class MainActivity : AppCompatActivity() {
             .setDeActiveColor(Color.parseColor(deActiveColor))
             .setActiveColor(Color.parseColor(activeColor))
             .setListener(object : FilePickerListener {
-                override fun selectedFiles(list: List<FileModel>?) {
+                override fun selectedFiles(files: List<FileModel>?, uris: List<Uri>?) {
+                    val a = uris
                 }
             })
             .show()
