@@ -64,7 +64,7 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-                groupId = 'mahdiasd.bottomdialogfilepicker'
+                groupId = 'com.mahdiasd.filepicker'
                 artifactId = 'bottom_dialog_file_picker'
                 version = '2.0.5'
             }
