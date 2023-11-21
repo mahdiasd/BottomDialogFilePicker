@@ -2,6 +2,8 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id("maven-publish")
+
 }
 
 android {
@@ -33,6 +35,12 @@ android {
     buildFeatures {
         dataBinding true
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
     namespace 'com.mahdiasd.filepicker'
 }
 
@@ -50,3 +58,30 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'mahdiasd.bottomdialogfilepicker'
+                artifactId = 'bottom_dialog_file_picker'
+                version = '2.0.5'
+            }
+        }
+    }
+}
+
+//publishing {
+//    publications {
+//        register<MavenPublication>("release") {
+//            groupId = "mahdiasd.bottomdialogfilepicker"
+//            artifactId = "bottom_dialog_file_picker"
+//            version = "1.0.0"
+//
+//            afterEvaluate {
+//                from(components["release"])
+//            }
+//        }
+//    }
+//}
