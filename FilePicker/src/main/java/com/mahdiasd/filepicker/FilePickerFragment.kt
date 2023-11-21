@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,7 +75,10 @@ class FilePickerFragment : BottomSheetDialogFragment() {
 
     private fun checkPermission() {
         val list = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (isGrant(Manifest.permission.READ_MEDIA_IMAGES) && isGrant(Manifest.permission.READ_MEDIA_AUDIO) && isGrant(Manifest.permission.READ_MEDIA_VIDEO)) getFiles()
+            if (isGrant(Manifest.permission.READ_MEDIA_IMAGES)
+                && isGrant(Manifest.permission.READ_MEDIA_AUDIO)
+                && isGrant(Manifest.permission.READ_MEDIA_VIDEO)
+            ) getFiles()
             mutableListOf(
                 Manifest.permission.READ_MEDIA_IMAGES,
                 Manifest.permission.READ_MEDIA_VIDEO,
@@ -89,7 +93,8 @@ class FilePickerFragment : BottomSheetDialogFragment() {
 
         if (config.mode.contains(PickerMode.Camera)) {
             list.add(Manifest.permission.CAMERA)
-            list.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)
+                list.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
         requestMultiplePermissions.launch(list.toTypedArray())
     }
@@ -305,6 +310,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
 
     private val requestMultiplePermissions =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            Log.e("TAG", "" + permissions.entries)
             if (permissions.entries.all { it.value }) {
                 getFiles()
             } else {
@@ -520,7 +526,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         dismiss()
     }
 
-    fun RecyclerView.disableItemAnimator() {
+    private fun RecyclerView.disableItemAnimator() {
         //disable blink when notifyDataSetChanged
         (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
     }
