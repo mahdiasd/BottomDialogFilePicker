@@ -73,9 +73,20 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     }
 
     private fun checkPermission() {
-        if (isGrant(Manifest.permission.READ_EXTERNAL_STORAGE)) getFiles()
+        val list = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (isGrant(Manifest.permission.READ_MEDIA_IMAGES) && isGrant(Manifest.permission.READ_MEDIA_AUDIO) && isGrant(Manifest.permission.READ_MEDIA_VIDEO)) getFiles()
+            mutableListOf(
+                Manifest.permission.READ_MEDIA_IMAGES,
+                Manifest.permission.READ_MEDIA_VIDEO,
+                Manifest.permission.READ_MEDIA_AUDIO
+            )
+        } else {
+            if (isGrant(Manifest.permission.READ_EXTERNAL_STORAGE)) getFiles()
+            mutableListOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+            )
+        }
 
-        val list = arrayListOf(Manifest.permission.READ_EXTERNAL_STORAGE)
         if (config.mode.contains(PickerMode.Camera)) {
             list.add(Manifest.permission.CAMERA)
             list.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -84,7 +95,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     }
 
     private fun isGrant(permission: String): Boolean {
-        return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        return ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
     }
 
     fun setConfig(filePicker: FilePicker) {
@@ -187,6 +198,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                 ).show()
                 false
             }
+
             config.totalFileSize != null && totalSize > config.totalFileSize!! -> {
                 Toast.makeText(
                     context, "${config.maxTotalFileSizeText} ${config.totalFileSize}kb",
@@ -194,6 +206,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                 ).show()
                 false
             }
+
             else -> true
         }
     }
@@ -252,6 +265,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                         )
                     )
                 }
+
                 PickerMode.Audio -> {
                     temp.add(
                         SectionModel(
@@ -261,6 +275,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                         )
                     )
                 }
+
                 PickerMode.Video -> {
                     temp.add(
                         SectionModel(
@@ -270,6 +285,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                         )
                     )
                 }
+
                 PickerMode.Image -> {
                     temp.add(
                         SectionModel(
@@ -279,6 +295,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
                         )
                     )
                 }
+
                 else -> {}
             }
         }
@@ -436,12 +453,15 @@ class FilePickerFragment : BottomSheetDialogFragment() {
             PickerMode.Audio -> {
                 audioList
             }
+
             PickerMode.Video -> {
                 videoList
             }
+
             PickerMode.Image -> {
                 imageList
             }
+
             else -> {
                 selectedFiles
             }
