@@ -63,36 +63,23 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 
-
 publishing {
     publications {
-        maven(MavenPublication) {
-            from components.java
+        release(MavenPublication) {
+            groupId = 'com.github.mahdiasd'
+            artifactId = 'BottomDialogFilePicker'
+            version = '2.1.7'
+
+            afterEvaluate {
+                from components.release
+            }
         }
     }
 }
 
-task publishToMavenLocal(type: PublishToMavenLocal) {
-    publication = publishing.publications.maven
+tasks.register('generateRepo', Zip) {
+    def publishTask = tasks.named('publishReleasePublicationToMyrepoRepository')
+    from publishTask.map { it.getRepository().getUrl() }
+    into 'FilePicker'
+    archiveFileName.set('filepicker.zip')
 }
-
-//publishing {
-//    publications {
-//        release(MavenPublication) {
-//            groupId = 'com.github.mahdiasd'
-//            artifactId = 'BottomDialogFilePicker'
-//            version = '2.1.7'
-//
-//            afterEvaluate {
-//                from components.release
-//            }
-//        }
-//    }
-//}
-//
-//tasks.register('generateRepo', Zip) {
-//    def publishTask = tasks.named('publishReleasePublicationToMyrepoRepository')
-//    from publishTask.map { it.getRepository().getUrl() }
-//    into 'FilePicker'
-//    archiveFileName.set('filepicker.zip')
-//}
