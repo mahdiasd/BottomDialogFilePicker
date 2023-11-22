@@ -3,7 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'maven-publish'
-
 }
 
 android {
@@ -68,8 +67,8 @@ afterEvaluate {
                 from components.release
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.mahdiasd.filepicker'
-                artifactId = 'BottomDialogFilePicker'
-                version = '2.1.4'
+                artifactId = 'FilePicker'
+                version = '2.1.5'
             }
         }
     }
