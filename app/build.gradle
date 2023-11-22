@@ -69,7 +69,7 @@ publishing {
         release(MavenPublication) {
             groupId = 'com.github.mahdiasd'
             artifactId = 'BottomDialogFilePicker'
-            version = '2.1.7'
+            version = '2.1.9'
 
             afterEvaluate {
                 from components.release
