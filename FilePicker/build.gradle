@@ -59,15 +59,17 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 
-publishing {
-    publications {
-        release(MavenPublication) {
-            groupId = 'com.mahdiasd'
-            artifactId = 'com.mahdiasd.filepicker'
-            version = '2.1.0'
-
-            afterEvaluate {
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
                 from components.release
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'com.filepicker'
+                artifactId = 'file_picker'
+                version = '2.1.2'
             }
         }
     }
