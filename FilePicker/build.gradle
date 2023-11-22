@@ -44,6 +44,7 @@ android {
     testFixtures {
         enable = true
     }
+
     namespace 'com.mahdiasd.filepicker'
 }
 
@@ -65,9 +66,9 @@ dependencies {
 publishing {
     publications {
         release(MavenPublication) {
-            groupId = 'com.mahdiasd'
-            artifactId = 'FilePicker'
-            version = '2.1.6'
+            groupId = 'com.github.mahdiasd'
+            artifactId = 'BottomDialogFilePicker'
+            version = '2.1.7'
 
             afterEvaluate {
                 from components.release
@@ -79,6 +80,6 @@ publishing {
 tasks.register('generateRepo', Zip) {
     def publishTask = tasks.named('publishReleasePublicationToMyrepoRepository')
     from publishTask.map { it.getRepository().getUrl() }
-    into 'mylibrary'
-    archiveFileName.set('mylibrary.zip')
+    into 'FilePicker'
+    archiveFileName.set('filepicker.zip')
 }
