@@ -59,3 +59,16 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'com.mahdiasd'
+            artifactId = 'com.mahdiasd.filepicker'
+            version = '2.1.0'
+
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
+}
