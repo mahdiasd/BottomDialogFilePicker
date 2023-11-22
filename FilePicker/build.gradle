@@ -59,13 +59,3 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = 'com.mahdiasd.filepicker'
-            artifactId = 'FilePicker'
-            version = '2.0.8'
-
-        }
-    }
-}

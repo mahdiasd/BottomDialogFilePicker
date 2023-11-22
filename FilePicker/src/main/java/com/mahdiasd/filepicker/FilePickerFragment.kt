@@ -2,10 +2,12 @@ package com.mahdiasd.filepicker
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -50,6 +52,7 @@ class FilePickerFragment : BottomSheetDialogFragment() {
     private lateinit var config: FilePicker
     private var storageIsOpen = false
     private var cameraImagePath = ""
+    private var cameraImageName = ""
 
     companion object {
         fun newInstance() = FilePickerFragment()
@@ -146,10 +149,11 @@ class FilePickerFragment : BottomSheetDialogFragment() {
 
 
     fun openCamera() {
-        if (!isGrant(Manifest.permission.CAMERA) || !isGrant(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+        if (!isGrant(Manifest.permission.CAMERA))
             checkPermission()
         else {
-            cameraImagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path + File.separator + System.currentTimeMillis() + ".png"
+            cameraImageName = "${System.currentTimeMillis()}.png"
+            cameraImagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path + File.separator + cameraImageName
             val file = File(cameraImagePath)
             file.createNewFile()
             val outputFileUri = getUriFromFile(file)
@@ -157,6 +161,24 @@ class FilePickerFragment : BottomSheetDialogFragment() {
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
             cameraLauncher.launch(cameraIntent)
         }
+    }
+
+    private fun saveBitmapToGallery(bitmap: Bitmap) {
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, cameraImageName)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
+        }
+
+        val uri = requireContext().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues) ?: return
+
+        requireContext().contentResolver.openOutputStream(uri)?.use { outputStream ->
+            // Compress and save bitmap to output stream
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+            outputStream.flush()
+            outputStream.close()
+
+        }
+        requireContext().sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
     }
 
     private fun openFileManager() {
@@ -220,8 +242,11 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         if (result.resultCode == Activity.RESULT_OK) {
             initRecyclerView()
             result.data?.extras?.get("data")?.let {
-//                val imageBitmap = it as Bitmap?
-//                val file = saveBitmapToStorage(imageBitmap)
+
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU && it is Bitmap) {
+                    saveBitmapToGallery(it)
+                }
+
                 getImage()
                 if (File(cameraImagePath).exists()) {
                     val fileModel = FileModel(cameraImagePath)
