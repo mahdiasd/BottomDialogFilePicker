@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 21
-        targetSdk 33
+        targetSdk 34
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -69,14 +69,9 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
                 groupId = 'com.mahdiasd'
-                artifactId = 'filepicker'
+                artifactId = 'FilePicker'
                 version = '3.0.3'
-            }
-        }
-        repositories {
-            maven {
-                name = 'BuildFolder'
-                url = "${project.buildDir}/repository"
+//                artifact("$buildDir/outputs/aar/FilePicker-release.aar")
             }
         }
     }
