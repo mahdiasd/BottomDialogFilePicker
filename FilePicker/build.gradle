@@ -69,7 +69,7 @@ publishing {
         release(MavenPublication) {
             groupId = "com.mahdiasd.filepicker"
             artifactId = "FilePicker"
-            version = "2.2.9"
+            version = "2.3.0"
 
             afterEvaluate {
                 from components.release
