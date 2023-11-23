@@ -1,19 +1,20 @@
 plugins {
-    id 'maven-publish'
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'maven-publish'
 }
 
 android {
-    compileSdk 34
+    compileSdk 32
+    namespace = "com.mahdiasd.filepicker"
 
     defaultConfig {
         aarMetadata {
             minCompileSdk = 29
         }
         minSdk 21
-        targetSdk 34
+        targetSdk 32
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -27,11 +28,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+        jvmTarget = '1.8'
     }
 
     buildFeatures {
@@ -40,23 +41,18 @@ android {
 
     publishing {
         singleVariant("release") {
-            withJavadocJar()
             withSourcesJar()
+            withJavadocJar()
         }
     }
 
-    testFixtures {
-        enable = true
-    }
-
-    namespace 'com.mahdiasd.filepicker'
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.10.0'
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.6.1'
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
     implementation "com.github.bumptech.glide:glide:4.13.2"
@@ -67,23 +63,17 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 
+
 publishing {
     publications {
         release(MavenPublication) {
-            groupId = 'com.mahdiasd.filepicker'
-            artifactId = 'FilePicker'
-            version = '2.2.7'
+            groupId = "mahdiasd.bottomdialogfilepicker"
+            artifactId = "compose_bottom_dialog_file_picker"
+            version = "2.2.9"
 
             afterEvaluate {
                 from components.release
             }
         }
     }
-}
-
-tasks.register('generateRepo', Zip) {
-    def publishTask = tasks.named('publishReleasePublicationToMyrepoRepository')
-    from publishTask.map { it.getRepository().getUrl() }
-    into 'FilePicker'
-    archiveFileName.set('FilePicker.zip')
 }

@@ -4,12 +4,13 @@ plugins {
 }
 
 android {
-    compileSdk 34
+    compileSdk 32
+    namespace = "com.mahdiasd.sample"
 
     defaultConfig {
         applicationId "com.mahdiasd.sample"
         minSdk 21
-        targetSdk 34
+        targetSdk 32
         versionCode 1
         versionName "1.0"
 
@@ -27,31 +28,19 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = '1.8'
     }
 
     buildFeatures {
         dataBinding true
     }
-    namespace 'com.mahdiasd.sample'
-
-
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-        }
-    }
-
-    testFixtures {
-        enable = true
-    }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.10.0'
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     implementation project(":FilePicker")
