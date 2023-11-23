@@ -40,6 +40,7 @@ android {
 
     publishing {
         singleVariant("release") {
+            withJavadocJar()
             withSourcesJar()
         }
     }
@@ -66,15 +67,23 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'com.mahdiasd.filepicker'
+            artifactId = 'FilePicker'
+            version = '2.2.7'
+
+            afterEvaluate {
                 from components.release
-                groupId = 'com.mahdiasd'
-                artifactId = 'FilePicker'
-                version = '2.2.6'
             }
         }
     }
+}
+
+tasks.register('generateRepo', Zip) {
+    def publishTask = tasks.named('publishReleasePublicationToMyrepoRepository')
+    from publishTask.map { it.getRepository().getUrl() }
+    into 'FilePicker'
+    archiveFileName.set('FilePicker.zip')
 }
