@@ -67,8 +67,8 @@ dependencies {
 publishing {
     publications {
         release(MavenPublication) {
-            groupId = "mahdiasd.bottomdialogfilepicker"
-            artifactId = "compose_bottom_dialog_file_picker"
+            groupId = "com.mahdiasd.filepicker"
+            artifactId = "FilePicker"
             version = "2.2.9"
 
             afterEvaluate {
