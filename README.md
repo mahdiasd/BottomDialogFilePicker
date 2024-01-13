@@ -1,4 +1,4 @@
-# [Jetpack Compose Version](https://github.com/mahdiasd/ComposeBottomDialogFilePicker)
+# [Jetpack Compose Version](https://github.com/mahdiasd/BottomDialogFilePicker)
 
 # Bottom Dialog Android Picker
 
