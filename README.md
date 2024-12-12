@@ -1,175 +1,42 @@
-# [Jetpack Compose Version](https://github.com/mahdiasd/ComposeBottomDialogFilePicker)
+# 📢 Deprecated Library Notice
 
-# Bottom Dialog Android Picker
+⚠️ **This library is deprecated. Please refer to [ComposeFilePicker](https://github.com/mahdiasd/ComposeFilePicker) for the latest updates.**
 
-[![](https://jitpack.io/v/mahdiasd/BottomDialogFilePicker.svg)](https://jitpack.io/#mahdiasd/BottomDialogFilePicker)
+---
 
-Bottom dialog picker like telegram for all version of android (1 ... , 10 , 11 , 12 , 13)
+# 📁 Bottom Dialog Android Picker
 
-Take picture with camera and save to storage
+[![JitPack](https://jitpack.io/v/mahdiasd/BottomDialogFilePicker.svg)](https://jitpack.io/#mahdiasd/BottomDialogFilePicker)
 
-Search in Files
+A bottom dialog picker inspired by Telegram, compatible with all Android versions (1, 10, 11, 12, 13).
 
-Support android 10+
+## 🚀 Features
 
-Expandable and scrollable dialog
+- 📸 **Take Pictures**: Capture photos with the camera and save them to storage.
+- 🔍 **File Search**: Easily search through your files.
+- 📱 **Wide Compatibility**: Supports Android 10+.
+- 📜 **Expandable & Scrollable**: Smooth and intuitive dialog navigation.
+- 🎨 **Fully Customizable**: Customize colors, text, minimum and maximum file sizes, and more.
+- 🔒 **No Runtime Permissions Needed**: Simplified user experience without requiring additional permissions.
 
-Full Customisable (Color , text , minimum and maximum selected file size , ...)
+## 📸 Screenshots
 
-No required runtime permission
+![Demo 1](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/1.png)
+![Demo 2](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/2.png)
+![Demo 3](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/3.png)
+![Demo 4](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/4.png)
+![Demo 5](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/5.png)
 
+## 🛠 Installation
 
-## Screenshots
+### Step 1. Add the JitPack Repository
 
-![demo](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/1.png)
-![demo](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/2.png)
-![demo](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/3.png)
-![demo](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/4.png)
-![demo](https://raw.githubusercontent.com/mahdiasd/BottomDialogFilePicker/master/screenshot/5.png)
+Add the JitPack repository to your root `build.gradle` file:
 
-## Installation
-
-#### Step 1. Add the JitPack repository to your build file
-
-Install my project with gradle
-Add it in your root build.gradle at the end of repositories:
-
-
-```bash
-  allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
-```
-#### Step 2. Add the dependency
-
-```bash
-  dependencies {
-	        implementation 'com.github.mahdiasd:BottomDialogFilePicker:3.0.4'
-	}
-```
-## Ho To Use
-
-#### A- Easy Use:
-
-```
- FilePicker(this, supportFragmentManager)
-            .setMode(PickerMode.Image, PickerMode.Audio, PickerMode.File, PickerMode.Video)
-            .setListener(object : FilePickerListener {
-                override fun selectedFiles(list: List<FileModel>?) {
-                    // your code...
-                }
-            })
-            .show()
-```
-
-#### B- Adcanced Use:
-
-```
- FilePicker(context, supportFragmentManager)
-            .setMode(PickerMode.Audio, PickerMode.Video, PickerMode.File, PickerMode.Image, PickerMode.Camera)
-            .setDefaultMode(PickerMode.Image)
-            .setMaxSelection(5)
-            .setMaxEachFileSize(1 * 1024) // mean -> 1 mb 
-            .setMaxTotalFileSize(15 * 1024) // mean -> 15 mb
-            .setCustomText("video", "audio", "storage", "image", "openStorage")
-            .setShowFileWhenClick(true)
-            .setCardBackgroundColor(ContextCompat.getColor(context, R.color.white))
-            .setDeActiveColor(ContextCompat.getColor(context, R.color.gray))
-            .setActiveColor(ContextCompat.getColor(context, R.color.colorPrimary))
-            .setIcons(
-                videoIcon = ContextCompat.getDrawable(context, R.drawable.ic_video),
-                audioIcon = ContextCompat.getDrawable(context, R.drawable.ic_audio),
-                imageIcon = ContextCompat.getDrawable(context, R.drawable.ic_image),
-                fileManagerIcon = ContextCompat.getDrawable(context, R.drawable.ic_file),
-            )
-            .setListener(object : FilePickerListener {
-                override fun selectedFiles(list: List<FileModel>?) {
-                    // your code ...
-                }
-            })
-            .show()
-```
-
-#### You can also make some changes through the strings file
-```
-<string name="mahdiasd_file_picker_failed_open_file">Error when open file, please choose another!</string>
-
-<string name="mahdiasd_file_picker_cant_find_this_file">Can`t find this file</string>
-
-<string name="mahdiasd_file_picker_video">Video</string>
-
-<string name="mahdiasd_file_picker_audio">Audio</string>
-
-<string name="mahdiasd_file_picker_file_manager">File Manager</string>
-
-<string name="mahdiasd_file_picker_image">Image</string>
-
-<string name="mahdiasd_file_picker_open_storage">Open Storage</string>
-
-<string name="mahdiasd_file_picker_max_total_size">Max size for total files is</string>
-
-<string name="mahdiasd_file_picker_max_each_size">Max size for each files is</string>
-
-<string name="mahdiasd_file_picker_search">Search…</string>
-
-<string name="mahdiasd_file_picker_permission_denied_toast">Permission needed!</string>
-
-```
-
-## Version 2 features:
-
-- Add camera to take picture
-- Fix show preview bug
-- Add search icon to replace with default
-- Add done icon to replace with default 
-- Fix card background color bug
-
-
-## This library uses the following libraries
-
-- [Glide](https://github.com/bumptech/glide)
-- [Handle Path Oz](https://github.com/onimur/handle-path-oz)
-
-Thanks to the very powerful Glide and Handle Path Oz
-
-## Proguard
-
-```
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep class * extends com.bumptech.glide.module.AppGlideModule {
- <init>(...);
+```groovy
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
 }
--keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
-  **[] $VALUES;
-  public *;
-}
--keep class com.bumptech.glide.load.data.ParcelFileDescriptorRewinder$InternalRewinder {
-  *** rewind();
-}
-
-# Uncomment for DexGuard only
-#-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
-```
-
-## LICENCE
-```
-Copyright 2022 Mahdi Asadollahpour BottomDialogFilePicker
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-```
-
-### | ~~~~ Thank you for your support of my project and star it ~~~~ |
